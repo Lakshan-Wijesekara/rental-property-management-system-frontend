@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1, 
+        "name": "Lakshan",
+        "email": "lakshan@gmail.com",
+        "gender": "male"
+    },
+
+    {
+        "id": 2,  
+        "name": "Asitha",  
+        "email": "asitha@gmail.com",  
+        "gender": "male"  
+
+    },
+
+    {
+        "id": 3,  
+        "name": "Anna",  
+        "email": "anna@gmail.com",  
+        "gender": "female"  
+    },
+
+    {
+        "id": 4,  
+        "name": "Sithum",  
+        "email": "sithum@gmail.com",  
+        "gender": "male"  
+    },
+
+    {
+        "id": 5,  
+        "name": "Mary",  
+        "email": "mary@gmail.com",  
+        "gender": "female"  
+    }
+
+]
