@@ -1,0 +1,29 @@
+<div class="logincontainer">
+
+    <div class="card"> 
+
+        <p-card header="Welcome to Property Rental Services!" subheader="The Property Management Companion" [style]="{ width: '380px', height: '600px' }">
+            <ng-template pTemplate="header">
+                <img id="logo" alt="Card" src="assets\logo.jpg"/>
+            </ng-template>
+            <div class="username">
+                <p-floatLabel>
+                    <input id="username" type="text" pInputText [(ngModel)]="value"/>
+                    <label for="username">Username</label>
+                </p-floatLabel>
+            </div>
+            <div class="row" style="margin-top: 20px;"></div>
+            <div class="password" >
+                <p-password id="passwordbox" [(ngModel)]="value" [toggleMask]="true"/>
+            </div>
+            <ng-template pTemplate="footer">
+                <div class="flex gap-3 mt-1">
+                    <p-button label="Submit" class="w-full" styleClass="w-full" />
+                </div>
+            </ng-template>
+        </p-card>
+        
+     
+
+    </div>
+</div>
