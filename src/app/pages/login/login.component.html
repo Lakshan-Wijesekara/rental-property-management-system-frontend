@@ -1,29 +1,52 @@
-<div class="logincontainer">
+<div class="login-container">
+  <div class="card">
+    <p-card
+      header="Property Management System"
+      class="title"
+      subheader="Property Management Companion">
 
-    <div class="card"> 
-
-        <p-card header="Welcome to Property Rental Services!" subheader="The Property Management Companion" [style]="{ width: '380px', height: '600px' }">
-            <ng-template pTemplate="header">
-                <img id="logo" alt="Card" src="assets\logo.jpg"/>
-            </ng-template>
-            <div class="username">
-                <p-floatLabel>
-                    <input id="username" type="text" pInputText [(ngModel)]="value"/>
-                    <label for="username">Username</label>
-                </p-floatLabel>
-            </div>
-            <div class="row" style="margin-top: 20px;"></div>
-            <div class="password" >
-                <p-password id="passwordbox" [(ngModel)]="value" [toggleMask]="true"/>
-            </div>
-            <ng-template pTemplate="footer">
-                <div class="flex gap-3 mt-1">
-                    <p-button label="Submit" class="w-full" styleClass="w-full" />
-                </div>
-            </ng-template>
-        </p-card>
-        
-     
-
-    </div>
+      <ng-template pTemplate="header">
+        <img class="loginLogo" alt="Card" src="assets\logo.jpg" />
+      </ng-template>
+      <div class="username">
+          <div class="flex flex-column gap-2">
+          <label class="username-txt" for="username">Username</label>
+          <input
+            pInputText
+            class="username-box"
+            id="username"
+            aria-describedby="username-help"
+            [(ngModel)]="userName"
+          />
+        </div>
+      </div>
+      <div class="row" style="margin-top: 30px"></div>
+      <div class="password">
+        <div class="flex flex-column gap-2">
+          <label class="password-txt" for="password">Password</label>
+          <input
+            (keydown.enter)="traceData()"
+            type="password"
+            pInputText
+            class="password-box"
+            id="password"
+            aria-describedby="username-help"
+            [(ngModel)]="password"
+          />
+        </div>
+      </div>
+      <ng-template pTemplate="footer">
+        <div class="submitbtn">
+          <p-toast position="top-right" key="tr" />
+          <p-button
+            (onClick)="traceData()"
+            [loading]="loading"
+            label="Login"
+            [rounded]="true"
+            severity="warning"
+          />
+        </div>
+      </ng-template>
+    </p-card>
+  </div>
 </div>
