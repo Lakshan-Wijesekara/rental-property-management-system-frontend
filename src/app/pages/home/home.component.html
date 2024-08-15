@@ -1,3 +1,25 @@
-<!-- <div class="card">
-    <p-tabMenu [model]="items" />
-</div> -->
+<div class="dropdown">
+    <p-menu #menu [model]="items" [popup]="true" />
+    <p-button (onClick)="menu.toggle($event)" icon="pi pi-user-edit"/>
+</div>
+
+
+<div class="menu-bar">
+      <p-button 
+          (onClick)="activeItem = items[0]" 
+          class = "profile-btn"
+          [rounded]="true" 
+           />
+      <p-button 
+          (onClick)="activeItem = items[1]" 
+          [rounded]="true" 
+           />
+      <p-button 
+          (onClick)="activeItem = items[2]" 
+          [rounded]="true" 
+           />
+    </div>
+    <p-tabMenu 
+      [model]="items" 
+      [activeItem]="activeItem" 
+      (activeItemChange)="onActiveItemChange($event)" />

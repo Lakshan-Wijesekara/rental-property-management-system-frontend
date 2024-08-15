@@ -7,7 +7,6 @@ export class DataService {
   constructor(private http: HttpClient) {}
 
   fetchData(): Observable<any> {
-    //error handling * rxjs
     return this.http.get('assets/users.json');
   }
 }

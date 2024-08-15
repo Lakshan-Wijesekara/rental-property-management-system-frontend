@@ -3,7 +3,8 @@ import { DataService } from './userdata.service';
 import { Router } from '@angular/router';
 import { User } from '../../interfaces/user';
 import { MessageService } from 'primeng/api';
-import { EncryptionService } from './encryption.service';
+import { EncryptionService } from '../../services/encryption.service';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
     private dataService: DataService,
     private router: Router,
     private messageService: MessageService,
-    private encryptionService: EncryptionService
+    private encryptionService: EncryptionService,
+    private authenticationService: AuthenticationService
   ) {}
 
   ngOnInit(): void {}
@@ -75,6 +77,9 @@ export class LoginComponent implements OnInit {
     if (
       this.encryptionService.comparePassword(this.password, person?.password)
     ) {
+      const returnedToken =
+        person && this.authenticationService.generateToken(person); //Pass the user as an input for generateToken method
+
       this.router.navigate(['/home']);
     } else {
       this.messageService.add({

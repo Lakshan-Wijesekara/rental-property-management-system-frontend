@@ -10,20 +10,18 @@ import { AppComponent } from './app.component';
 import { provideHttpClient } from '@angular/common/http';
 import { HeaderComponent } from './components/header/header.component';
 import { LoginComponent } from './pages/login/login.component';
-import { LoginModule } from './pages/login/login.module';
+import { PrimeNgModule } from './pages/login/prime-ng.module';
 import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './pages/home/home.component';
-import { HomeModule } from './pages/home/home.module';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, LoginComponent, HomeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    LoginModule,
+    PrimeNgModule,
     CommonModule,
     FormsModule,
-    HomeModule,
   ],
   providers: [provideClientHydration(), provideHttpClient()],
   bootstrap: [AppComponent],

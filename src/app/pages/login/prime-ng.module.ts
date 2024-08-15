@@ -9,6 +9,10 @@ import { MessagesModule } from 'primeng/messages';
 import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { MenuItem } from 'primeng/api';
+import { MenubarModule } from 'primeng/menubar';
+import { MenuModule } from 'primeng/menu';
 
 @NgModule({
   declarations: [],
@@ -22,6 +26,9 @@ import { ToastModule } from 'primeng/toast';
     RippleModule,
     BrowserAnimationsModule,
     CascadeSelectModule,
+    TabMenuModule,
+    MenubarModule,
+    MenuModule,
   ],
   exports: [
     FloatLabelModule,
@@ -33,7 +40,10 @@ import { ToastModule } from 'primeng/toast';
     RippleModule,
     BrowserAnimationsModule,
     CascadeSelectModule,
+    TabMenuModule,
+    MenubarModule,
+    MenuModule,
   ],
   providers: [MessageService],
 })
-export class LoginModule {}
+export class PrimeNgModule {}
