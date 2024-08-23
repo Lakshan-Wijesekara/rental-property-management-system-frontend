@@ -1,41 +1,47 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthenticationService } from '../../services/authentication.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
-  items: MenuItem[] = [];
-  activeItem: MenuItem = [];
+  router = inject(Router);
+  loading: unknown;
+  constructor(
+    private MessageService: MessageService,
+    private confirmationService: ConfirmationService,
+    private authenticationService: AuthenticationService
+  ) {}
 
-  // ngOnInit(): void {}
-
-  ngOnInit(): void {
-    this.items = [
-      {
-        label: 'Profile',
-        items: [
-          {
-            label: 'Refresh',
-            icon: 'pi pi-refresh',
-          },
-          {
-            label: 'Logout',
-            icon: 'pi pi-sign-out',
-          },
-        ],
+  confirm() {
+    this.confirmationService.confirm({
+      header: 'Logging Out',
+      message: 'Do you want to logout?',
+      acceptIcon: 'pi pi-check mr-2',
+      rejectIcon: 'pi pi-times mr-2',
+      rejectButtonStyleClass: 'p-button-sm',
+      acceptButtonStyleClass: 'p-button-outlined p-button-sm',
+      accept: () => {
+        this.MessageService.add({
+          severity: 'error',
+          summary: 'Confirmed',
+          detail: 'Logging out!',
+          life: 3000,
+        });
+        this.authenticationService.clearToken();
       },
-    ];
-    this.items = [
-      { label: 'Profile', icon: 'pi pi-home' },
-      { label: 'Transactions', icon: 'pi pi-chart-line' },
-      { label: 'Properties', icon: 'pi pi-building' },
-      { label: 'Messages', icon: 'pi pi-bell' },
-    ];
-    this.activeItem = this.items[0];
-  }
-  onActiveItemChange(event: MenuItem) {
-    this.activeItem = event;
+      reject: () => {
+        this.MessageService.add({
+          severity: 'success',
+          summary: 'Rejected',
+          detail: 'You have cancelled!',
+          life: 3000,
+        });
+      },
+    });
   }
 }

@@ -1,25 +1,14 @@
-<div class="dropdown">
-    <p-menu #menu [model]="items" [popup]="true" />
-    <p-button (onClick)="menu.toggle($event)" icon="pi pi-user-edit"/>
+<h1>Home!</h1>
+<div class="logout-button">
+    <p-toast />
+    <p-confirmDialog>
+        <ng-template pTemplate="message" let-message>
+            <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
+                <i class="pi pi-exclamation-circle text-6xl text-primary-500"></i>
+                <p>{{ message.message }}</p>
+            </div>
+        </ng-template>
+    </p-confirmDialog>
+    <p-button (onClick)="confirm()" label="Logout"  />
 </div>
 
-
-<div class="menu-bar">
-      <p-button 
-          (onClick)="activeItem = items[0]" 
-          class = "profile-btn"
-          [rounded]="true" 
-           />
-      <p-button 
-          (onClick)="activeItem = items[1]" 
-          [rounded]="true" 
-           />
-      <p-button 
-          (onClick)="activeItem = items[2]" 
-          [rounded]="true" 
-           />
-    </div>
-    <p-tabMenu 
-      [model]="items" 
-      [activeItem]="activeItem" 
-      (activeItemChange)="onActiveItemChange($event)" />

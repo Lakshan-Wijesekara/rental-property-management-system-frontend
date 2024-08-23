@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
 import { User } from '../interfaces/user';
-
+import { inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
+  router = inject(Router);
   constructor() {}
 
   generateToken(person: User): string {
@@ -21,7 +24,7 @@ export class AuthenticationService {
     const jwtPayload = {
       sub: '12345',
       user: personData,
-      exp: Math.floor(Date.now() / 1000) + 3600,
+      exp: Math.floor(Date.now() / 1000) + 10,
       admin: true,
     };
 
@@ -35,8 +38,7 @@ export class AuthenticationService {
     );
     const encodedPayload = CryptoJS.enc.Base64url.stringify(stringifiedPayload);
 
-    const secretKey =
-      'd8399978cc6d9a202f0d2090b4b353891d8350a1fa0664cb8b2c41fa86a5b4b2';
+    const secretKey = environment.secretKey;
 
     const token = `${encodedHeader}.${encodedPayload}`;
     const signature = CryptoJS.enc.Base64url.stringify(
@@ -48,5 +50,21 @@ export class AuthenticationService {
     localStorage.setItem('SESSION_TOKEN', jwt);
 
     return jwt;
+  }
+
+  isLoggedIn(): boolean {
+    const sessionToken = localStorage.getItem('SESSION_TOKEN');
+    if (sessionToken) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  clearToken(): void {
+    localStorage.removeItem('SESSION_TOKEN');
+    setTimeout(() => {
+      this.router.navigate(['/login']);
+    });
   }
 }

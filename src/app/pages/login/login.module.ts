@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CascadeSelectModule } from 'primeng/cascadeselect';
@@ -10,12 +10,14 @@ import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
 import { TabMenuModule } from 'primeng/tabmenu';
-import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { LoginComponent } from './login.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [],
+  declarations: [LoginComponent],
   imports: [
     FloatLabelModule,
     PasswordModule,
@@ -24,26 +26,14 @@ import { MenuModule } from 'primeng/menu';
     MessagesModule,
     ToastModule,
     RippleModule,
-    BrowserAnimationsModule,
     CascadeSelectModule,
     TabMenuModule,
     MenubarModule,
     MenuModule,
+    ConfirmDialogModule,
+    FormsModule,
   ],
-  exports: [
-    FloatLabelModule,
-    PasswordModule,
-    CardModule,
-    ButtonModule,
-    MessagesModule,
-    ToastModule,
-    RippleModule,
-    BrowserAnimationsModule,
-    CascadeSelectModule,
-    TabMenuModule,
-    MenubarModule,
-    MenuModule,
-  ],
-  providers: [MessageService],
+  exports: [LoginComponent],
+  providers: [],
 })
-export class PrimeNgModule {}
+export class LoginModule {}

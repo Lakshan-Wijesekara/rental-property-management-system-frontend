@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from './userdata.service';
+import { DataService } from '../../services/userdata.service';
 import { Router } from '@angular/router';
 import { User } from '../../interfaces/user';
 import { MessageService } from 'primeng/api';

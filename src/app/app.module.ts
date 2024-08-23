@@ -4,26 +4,30 @@ import {
   provideClientHydration,
 } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideHttpClient } from '@angular/common/http';
-import { HeaderComponent } from './components/header/header.component';
-import { LoginComponent } from './pages/login/login.component';
-import { PrimeNgModule } from './pages/login/prime-ng.module';
 import { FormsModule } from '@angular/forms';
-import { HomeComponent } from './pages/home/home.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { HeaderModule } from './components/header/header.module';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, LoginComponent, HomeComponent],
+  declarations: [AppComponent],
   imports: [
-    BrowserModule,
     AppRoutingModule,
-    PrimeNgModule,
     CommonModule,
     FormsModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    HeaderModule,
   ],
-  providers: [provideClientHydration(), provideHttpClient()],
+  providers: [
+    provideClientHydration(),
+    provideHttpClient(),
+    ConfirmationService,
+    MessageService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
