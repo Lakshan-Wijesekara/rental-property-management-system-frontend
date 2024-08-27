@@ -1,0 +1,53 @@
+html,body {
+    overflow: hidden;
+    height: 100%;
+    margin:0;
+}
+
+.container{
+  display:flex;
+  justify-content:center;
+  align-items: center;
+  height:85vh;
+  width: max-content;
+}
+
+:host ::ng-deep .p-card-title{
+    text-align: center;
+}
+
+.property-name-box{
+    width: 100%;
+}
+
+.monthly-rental{
+    width: 100%;
+}
+
+:host ::ng-deep .p-dropdown{
+    width: 100%;
+} 
+
+.dropdown-box{
+    width: 1000%;
+}
+
+.western-flag{
+    width: 20px;
+}
+
+.property-size{
+    width: 100%;
+}
+
+:host ::ng-deep .submit-btn{
+    display: flex;
+    justify-content: right;
+    font-size: small;
+}
+
+:host ::ng-deep .p-element{
+    display: flex;
+    border-radius: 6px;
+}
+

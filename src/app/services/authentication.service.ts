@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EnvironmentInjector, Inject, Injectable } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
 import { User } from '../interfaces/user';
 import { inject } from '@angular/core';
@@ -45,8 +45,6 @@ export class AuthenticationService {
       CryptoJS.HmacSHA256(token, secretKey)
     );
     const jwt = `${token}.${signature}`;
-    //sign
-    console.log('see', jwt);
     localStorage.setItem('SESSION_TOKEN', jwt);
 
     return jwt;

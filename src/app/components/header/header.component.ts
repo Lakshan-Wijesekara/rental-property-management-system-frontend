@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { Router } from '@angular/router';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-header',
@@ -8,6 +11,40 @@ import { MenuItem } from 'primeng/api';
 })
 export class HeaderComponent implements OnInit {
   items: MenuItem[] | undefined;
+  constructor(
+    private router: Router,
+    private authenticationService: AuthenticationService,
+    private MessageService: MessageService,
+    private confirmationService: ConfirmationService
+  ) {}
+
+  confirm() {
+    this.confirmationService.confirm({
+      header: 'Logging Out',
+      message: 'Do you want to logout?',
+      acceptIcon: 'pi pi-check mr-2',
+      rejectIcon: 'pi pi-times mr-2',
+      rejectButtonStyleClass: 'p-button-sm',
+      acceptButtonStyleClass: 'p-button-outlined p-button-sm',
+      accept: () => {
+        this.MessageService.add({
+          severity: 'error',
+          summary: 'Confirmed',
+          detail: 'Logging out!',
+          life: 3000,
+        });
+        this.authenticationService.clearToken();
+      },
+      reject: () => {
+        this.MessageService.add({
+          severity: 'success',
+          summary: 'Rejected',
+          detail: 'You have cancelled!',
+          life: 3000,
+        });
+      },
+    });
+  }
 
   ngOnInit() {
     this.InitializeData();
@@ -18,6 +55,7 @@ export class HeaderComponent implements OnInit {
       {
         label: 'Home',
         icon: 'pi pi-home',
+        command: () => this.router.navigate(['/home']),
       },
       {
         label: 'Features',
@@ -28,36 +66,21 @@ export class HeaderComponent implements OnInit {
         icon: 'pi pi-search',
         items: [
           {
-            label: 'Components',
-            icon: 'pi pi-bolt',
-          },
-          {
-            label: 'Blocks',
-            icon: 'pi pi-server',
-          },
-          {
-            label: 'UI Kit',
-            icon: 'pi pi-pencil',
-          },
-          {
-            label: 'Templates',
-            icon: 'pi pi-palette',
-            items: [
-              {
-                label: 'Apollo',
-                icon: 'pi pi-palette',
-              },
-              {
-                label: 'Ultima',
-                icon: 'pi pi-palette',
-              },
-            ],
+            label: 'Add Property',
+            icon: 'pi pi-plus',
+            command: () => this.router.navigate(['/add-property']),
           },
         ],
       },
       {
-        label: 'Contact',
-        icon: 'pi pi-envelope',
+        label: 'User',
+        icon: 'pi pi-users',
+        items: [
+          {
+            label: 'Profile',
+            icon: 'pi pi-user',
+          },
+        ],
       },
     ];
   }

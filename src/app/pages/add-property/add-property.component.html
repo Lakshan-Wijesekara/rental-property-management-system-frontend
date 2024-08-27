@@ -1,0 +1,43 @@
+<form class = "add-form" [formGroup] = "reactiveForm">
+<div class = "container">
+    <p-card header = "Add-Property">    
+<div class="dropdown">
+    <p-dropdown 
+        [formControlName]="'selectedCity'"
+        [options]="groupedCities" 
+        placeholder="Select the City"
+        [group]="true">
+            <ng-template let-group pTemplate="group">
+                <div class="flex align-items-center">
+                    <img 
+                        src=".\assets\Western Province logo.png"
+                        class="western-flag" 
+                         />
+                    <span>{{ group.label }}</span>
+                </div>
+            </ng-template>
+    </p-dropdown>
+    <div class="row" style="margin-top: 22px"></div>
+    <p-floatLabel>
+        <input class="property-name-box" pInputText id="Property-Name"  [formControlName]="'propertyName'"
+        />
+        <label>Property Name</label>
+    </p-floatLabel>
+    <div class="row" style="margin-top: 22px"></div>
+    <p-floatLabel>
+        <input class="property-size" pInputText id="property-size" [formControlName]="'propertyArea'"/> 
+        <label> Property Area (sq.ft) </label>
+    </p-floatLabel>
+    <div class="row" style="margin-top: 22px"></div>
+    <p-floatLabel>
+        <input class="monthly-rental" pInputText id="monthly-rental" [formControlName]="'monthlyRental'"/>
+        <label> Monthly Rental </label> 
+    </p-floatLabel>
+    <div class="row" style="margin-top: 25px"></div>
+    <div >
+        <p-button class="submit-btn" [raised]="true" [rounded]="false" label="Submit" severity="warning"  />
+    </div>
+</div>
+</p-card>
+</div>
+</form>

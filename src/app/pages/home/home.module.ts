@@ -19,7 +19,16 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     ToastModule,
     ConfirmDialogModule,
   ],
-  exports: [HomeComponent],
+  exports: [
+    HomeComponent,
+    ButtonModule,
+    MenuModule,
+    MenubarModule,
+    TabMenuModule,
+    FormsModule,
+    ToastModule,
+    ConfirmDialogModule,
+  ],
   providers: [],
 })
 export class HomeModule {}

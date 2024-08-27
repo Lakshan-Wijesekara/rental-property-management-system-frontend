@@ -4,33 +4,23 @@ import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { authGuard } from './guards/auth.guard';
 import { appGuard } from './guards/app.guard';
-import { HeaderComponent } from './components/header/header.component';
+import { AddPropertyComponent } from './pages/add-property/add-property.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   {
-    path: '',
-    component: HeaderComponent,
+    path: 'login',
+    component: LoginComponent,
     canActivate: [authGuard],
-    data: {
-      title: 'main',
-    },
-    children: [
-      {
-        path: 'login',
-        component: LoginComponent,
-        canActivate: [authGuard],
-        loadChildren: () =>
-          import('./pages/login/login.module').then((m) => m.LoginModule),
-      },
-      {
-        path: 'home',
-        component: HomeComponent,
-        canActivate: [appGuard],
-        loadChildren: () =>
-          import('./pages/home/home.module').then((m) => m.HomeModule),
-      },
-    ],
+  },
+  {
+    path: 'home',
+    component: HomeComponent,
+    canActivate: [appGuard],
+  },
+  {
+    path: 'add-property',
+    component: AddPropertyComponent,
   },
 ];
 
