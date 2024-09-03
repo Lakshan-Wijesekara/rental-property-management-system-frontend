@@ -15,9 +15,18 @@ import { DropdownModule } from 'primeng/dropdown';
 import { HeaderComponent } from './components/header/header.component';
 import { PrimengModule } from './shared/primeng.module';
 import { HomeModule } from './pages/home/home.module';
+import { AddUserComponent } from './pages/add-user/add-user.component';
+import { TextFieldModule } from '@angular/cdk/text-field';
+import { ValidatorDirDirective } from './directives/tpvalidator.directive';
 
 @NgModule({
-  declarations: [AppComponent, AddPropertyComponent, HeaderComponent],
+  declarations: [
+    AppComponent,
+    AddPropertyComponent,
+    HeaderComponent,
+    AddUserComponent,
+    ValidatorDirDirective,
+  ],
   imports: [
     AppRoutingModule,
     CommonModule,
@@ -28,6 +37,7 @@ import { HomeModule } from './pages/home/home.module';
     PrimengModule,
     HomeModule,
     ReactiveFormsModule,
+    TextFieldModule,
   ],
   providers: [
     provideClientHydration(),

@@ -70,6 +70,11 @@ export class HeaderComponent implements OnInit {
             icon: 'pi pi-plus',
             command: () => this.router.navigate(['/add-property']),
           },
+          {
+            label: 'Add User',
+            icon: 'pi pi-user-plus',
+            command: () => this.router.navigate(['/add-user']),
+          },
         ],
       },
       {

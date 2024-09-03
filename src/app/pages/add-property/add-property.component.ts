@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { SelectItemGroup } from 'primeng/api';
 import { CitydataService } from '../../services/citydata.service';
 import { City } from '../../interfaces/city';
 @Component({

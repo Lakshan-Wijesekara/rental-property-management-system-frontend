@@ -14,6 +14,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { LoginComponent } from '../pages/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -32,6 +33,7 @@ import { InputTextModule } from 'primeng/inputtext';
     ConfirmDialogModule,
     FormsModule,
     InputTextModule,
+    MatInputModule,
   ],
   exports: [
     LoginComponent,
@@ -49,6 +51,7 @@ import { InputTextModule } from 'primeng/inputtext';
     ConfirmDialogModule,
     FormsModule,
     InputTextModule,
+    MatInputModule,
   ],
   providers: [],
 })
