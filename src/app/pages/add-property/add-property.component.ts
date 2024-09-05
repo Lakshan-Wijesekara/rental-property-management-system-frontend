@@ -10,16 +10,28 @@ import { City } from '../../interfaces/city';
 export class AddPropertyComponent implements OnInit {
   groupedCities: City[] = [];
   inputValue: string | undefined;
+  visible: boolean = false;
 
   reactiveForm: FormGroup = new FormGroup({
-    selectedCity: new FormControl(''),
-    propertyName: new FormControl(''),
-    propertyArea: new FormControl('', [Validators.pattern('^[0-9]*$')]),
-    monthlyRental: new FormControl(''),
+    selectedCity: new FormControl('', [Validators.required]),
+    propertyName: new FormControl('', [Validators.required]),
+    propertyArea: new FormControl('', [
+      Validators.pattern('^[0-9]*$'),
+      Validators.required,
+    ]),
+    monthlyRental: new FormControl('', [Validators.required]),
   });
 
   ngOnInit(): void {
     this.getCities();
+  }
+
+  showDialog() {
+    this.visible = true;
+  }
+
+  onAdd(propertyForm: any) {
+    return propertyForm.valid;
   }
 
   constructor(private cityDataService: CitydataService) {}

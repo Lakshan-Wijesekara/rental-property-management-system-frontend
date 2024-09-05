@@ -5,14 +5,25 @@ html,body {
 }
 
 .row {
-    margin-top: 27px;
+    margin-top: 25px;
+}
+
+.row1{
+    margin-top: 40px;
+}
+
+.dialog-box{
+    display: flex;
 }
 
 .container{
-  display:flex;
-  justify-content:center;
-  align-items: center;
-  height:80vh;
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    border-style: none;
+    flex-direction: column;
+    height:min-content;
+    width: max-content;
 }
 
 :host ::ng-deep .p-card-title{
@@ -20,23 +31,23 @@ html,body {
 }
 
 .first-name-box{
-    width: 300px;
+    width: 100%;
 }
 
 .surname-box{
-    width: 300px;
+    width: 100%;
 }
 
 .property-name-box{
-    width: 300px;
+    width: 100%;
 }
 
 .user-email-box{
-    width: 300px;
+    width: 100%;
 }
 
 .tp-number-box{
-    width:300px;
+    width: 100%;
 }
 
 p-card {
@@ -64,5 +75,14 @@ p-card {
 }
 
 .text-label{
+    width: 100%;
+}
+
+.add-btn{
+    display: flex;
+    float: right;
+}
+
+.button-container{
     width: 100%;
 }

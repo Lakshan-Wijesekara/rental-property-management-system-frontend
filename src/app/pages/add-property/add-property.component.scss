@@ -4,19 +4,31 @@ html,body {
     margin:0;
 }
 
-.container{
-  display:flex;
-  justify-content:center;
-  align-items: center;
-  height:85vh;
-  width: max-content;
+.row{
+    margin-top: 22px;
 }
 
-:host ::ng-deep .p-card-title{
-    text-align: center;
+.row-button{
+    margin: 25px ;
+}
+
+.property-card{
+    border-style: none;
+}
+
+.container{
+  display:flex;
+  flex-direction: column;
+  align-items: left;
+  height:fit-content;
+  width: 100%;
 }
 
 .property-name-box{
+    width: 100%;
+}
+
+:host ::ng-deep .p-dropdown{
     width: 100%;
 }
 
@@ -24,12 +36,9 @@ html,body {
     width: 100%;
 }
 
-:host ::ng-deep .p-dropdown{
-    width: 100%;
-} 
-
 .dropdown-box{
-    width: 1000%;
+    display: flex;
+    width: 100%;
 }
 
 .western-flag{
@@ -40,10 +49,13 @@ html,body {
     width: 100%;
 }
 
-:host ::ng-deep .submit-btn{
+.button-container{
+    width:100%;
+}
+
+.submit-btn{
     display: flex;
-    justify-content: right;
-    font-size: small;
+    float: right;
 }
 
 :host ::ng-deep .p-element{

@@ -1,6 +1,7 @@
 [ 
     {
         "label": "Western Province",
+        "value": "wp",
         "items": [
              { "label": "Colombo", "value": "Colombo" },
              { "label": "Gampaha", "value": "Gampaha" }
@@ -9,6 +10,7 @@
     
     {
         "label": "Central Province",
+        "value": "cp",
         "items": [ 
             { "label": "Kandy", "value": "Kandy" },
             { "label": "Gampola", "value": "Gampola" }
@@ -16,6 +18,8 @@
     },
     {
         "label": "North Central Province",
-        "items": [ { "label": "Anuradhapura", "value": "Anuradhapura" }]
+        "value": "ncp",
+        "items": [ { "label": "Anuradhapura", "value": "Anuradhapura" },
+        { "label": "Polonnaruwa", "value": "Polonnaruwa" }]
     }
 ]

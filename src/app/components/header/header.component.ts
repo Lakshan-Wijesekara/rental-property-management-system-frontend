@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit {
           severity: 'success',
           summary: 'Rejected',
           detail: 'You have cancelled!',
-          life: 3000,
+          life: 1,
         });
       },
     });
@@ -58,34 +58,14 @@ export class HeaderComponent implements OnInit {
         command: () => this.router.navigate(['/home']),
       },
       {
-        label: 'Features',
-        icon: 'pi pi-star',
+        label: 'Properties',
+        icon: 'pi pi-building-columns',
+        command: () => this.router.navigate(['/add-property']),
       },
       {
-        label: 'Projects',
-        icon: 'pi pi-search',
-        items: [
-          {
-            label: 'Add Property',
-            icon: 'pi pi-plus',
-            command: () => this.router.navigate(['/add-property']),
-          },
-          {
-            label: 'Add User',
-            icon: 'pi pi-user-plus',
-            command: () => this.router.navigate(['/add-user']),
-          },
-        ],
-      },
-      {
-        label: 'User',
+        label: 'Users',
         icon: 'pi pi-users',
-        items: [
-          {
-            label: 'Profile',
-            icon: 'pi pi-user',
-          },
-        ],
+        command: () => this.router.navigate(['/add-user']),
       },
     ];
   }

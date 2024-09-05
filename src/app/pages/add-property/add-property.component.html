@@ -1,43 +1,43 @@
-<form class = "add-form" [formGroup] = "reactiveForm">
-<div class = "container">
-    <p-card header = "Add-Property">    
-<div class="dropdown">
-    <p-dropdown 
-        [formControlName]="'selectedCity'"
-        [options]="groupedCities" 
-        placeholder="Select the City"
-        [group]="true">
-            <ng-template let-group pTemplate="group">
-                <div class="flex align-items-center">
-                    <img 
-                        src=".\assets\Western Province logo.png"
-                        class="western-flag" 
-                         />
-                    <span>{{ group.label }}</span>
+<div class = "pop-up-form">
+    <p-button class="add-btn" (onClick)="showDialog()" label="Add-Property" />
+    <p-dialog  header="Add-Property" [modal]="true" [(visible)]="visible">
+        <form class = "add-property-form" #propertyForm="ngForm" [formGroup] = "reactiveForm" (ngSubmit)="onAdd(propertyForm)">
+            <div class = "container">
+                <p-dropdown 
+                    [formControlName]="'selectedCity'"
+                    [options]="groupedCities" 
+                    placeholder="Select the City"
+                    [group]="true">
+                        <ng-template let-group pTemplate="group">
+                            <div class="flex align-items-center">
+                                <img 
+                                    src=".\assets\Western Province logo.png"
+                                    class="western-flag" 
+                                    />
+                                <span>{{ group.label }}</span>
+                            </div>
+                        </ng-template>
+                </p-dropdown>
+                <div class="row"></div>
+                <p-floatLabel>
+                    <input class="property-name-box" pInputText id="Property-Name" [formControlName]="'propertyName'"/>
+                    <label>Property Name</label>
+                </p-floatLabel>
+                <div class="row"></div>
+                <p-floatLabel>
+                    <input class="property-size" pInputText id="property-size" [formControlName]="'propertyArea'"/> 
+                    <label> Property Area (sq.ft) </label>
+                </p-floatLabel>
+                <div class="row"></div>
+                <p-floatLabel>
+                    <input class="monthly-rental" pInputText id="monthly-rental" [formControlName]="'monthlyRental'"/>
+                    <label> Monthly Rental </label> 
+                </p-floatLabel>
+                <div class="row-button"></div>
+                <div class="button-container">
+                    <p-button class="submit-btn" [disabled]="!propertyForm.valid" type="submit" [raised]="true" label="Submit" severity="warning"  />
                 </div>
-            </ng-template>
-    </p-dropdown>
-    <div class="row" style="margin-top: 22px"></div>
-    <p-floatLabel>
-        <input class="property-name-box" pInputText id="Property-Name"  [formControlName]="'propertyName'"
-        />
-        <label>Property Name</label>
-    </p-floatLabel>
-    <div class="row" style="margin-top: 22px"></div>
-    <p-floatLabel>
-        <input class="property-size" pInputText id="property-size" [formControlName]="'propertyArea'"/> 
-        <label> Property Area (sq.ft) </label>
-    </p-floatLabel>
-    <div class="row" style="margin-top: 22px"></div>
-    <p-floatLabel>
-        <input class="monthly-rental" pInputText id="monthly-rental" [formControlName]="'monthlyRental'"/>
-        <label> Monthly Rental </label> 
-    </p-floatLabel>
-    <div class="row" style="margin-top: 25px"></div>
-    <div >
-        <p-button class="submit-btn" [raised]="true" [rounded]="false" label="Submit" severity="warning"  />
-    </div>
+            </div>
+        </form>
+    </p-dialog>
 </div>
-</p-card>
-</div>
-</form>

@@ -9,6 +9,12 @@ import { Component } from '@angular/core';
 export class AddUserComponent {
   constructor() {}
 
+  visible: boolean = false;
+
+  showDialog() {
+    this.visible = true;
+  }
+
   onSubmit(userForm: any) {
     return userForm.valid;
   }

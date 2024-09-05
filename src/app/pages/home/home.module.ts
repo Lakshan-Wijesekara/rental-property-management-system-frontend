@@ -7,6 +7,9 @@ import { HomeComponent } from './home.component';
 import { FormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -18,6 +21,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     FormsModule,
     ToastModule,
     ConfirmDialogModule,
+    BreadcrumbModule,
+    RouterModule,
+    CommonModule,
   ],
   exports: [
     HomeComponent,
@@ -28,6 +34,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     FormsModule,
     ToastModule,
     ConfirmDialogModule,
+    BreadcrumbModule,
+    RouterModule,
+    CommonModule,
   ],
   providers: [],
 })
