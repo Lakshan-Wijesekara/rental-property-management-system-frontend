@@ -5,7 +5,7 @@
             <div class = "container">
                 <div class="row"></div>
                     <p-floatLabel>
-                        <input class="first-name-box" pInputText id="first-Name" name="firstName" ngModel required>
+                        <input class="first-name-box" pInputText id="firstName" name="firstName" ngModel required>
                         <div class="error-message" *ngIf="!userForm.submitted  && !userForm.controls['firstName']?.valid && userForm.controls['firstName']?.touched">
                         *Name is required.
                         </div>
@@ -21,7 +21,7 @@
                     </p-floatLabel>
                 <div class="row"></div>
                     <p-floatLabel>
-                        <input class="property-name-box" pInputText id="property-name" name="propertyName" ngModel required>
+                        <input class="property-name-box" pInputText id="propertyName" name="propertyName" ngModel required>
                         <div class="error-message" *ngIf="!userForm.submitted && !userForm.controls['propertyName']?.valid && userForm.controls['propertyName']?.touched">
                             *Property Name is required.
                         </div>
@@ -29,7 +29,7 @@
                     </p-floatLabel>
                 <div class="row"></div>
                     <p-floatLabel>
-                        <input class="user-email-box" pInputText id="user-email" type="email" name="email" ngModel required email="true" >
+                        <input class="user-email-box" pInputText id="userEmail" type="email" name="email" ngModel required email="true" >
                         <div class="error-message" *ngIf="!userForm.submitted && !userForm.controls['userEmail']?.valid && userForm.controls['userEmail']?.touched">
                             *Email is required.
                         </div>
@@ -37,7 +37,7 @@
                     </p-floatLabel>
                 <div class="row"></div>
                     <p-floatLabel>
-                        <input class="tp-number-box" pInputText id="tp-number" name="telephoneNumber" ngModel required #telephoneNumber="ngModel" tpValidator maxlength="10">
+                        <input class="tp-number-box" pInputText id="telephoneNumber" name="telephoneNumber" ngModel required #telephoneNumber="ngModel" tpValidator maxlength="10">
                         <div class="error-message" *ngIf="!userForm.submitted && !userForm.controls['telephoneNumber']?.valid && userForm.controls['telephoneNumber']?.touched">
                             *A 10-digit mobile number is required.
                         </div>
