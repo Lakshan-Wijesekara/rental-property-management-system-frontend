@@ -18,10 +18,6 @@ import { HomeModule } from './pages/home/home.module';
 import { AddUserComponent } from './pages/add-user/add-user.component';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { ValidatorDirDirective } from './directives/tpvalidator.directive';
-import { addRxPlugin } from 'rxdb';
-import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode';
-addRxPlugin(RxDBDevModePlugin);
-
 @NgModule({
   declarations: [
     AppComponent,

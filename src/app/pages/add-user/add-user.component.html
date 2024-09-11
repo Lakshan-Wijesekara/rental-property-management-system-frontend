@@ -1,53 +1,74 @@
+<h3>Users</h3>
+<p-button (onClick)="showDialog()" label="Add-User" />
+<div class="row"></div>
+<div class="card">
+    <p-table [columns]="cols" [value]="getUsers()" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns">
+                    {{ col.header }}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+                <td *ngFor="let col of columns">
+                    {{ rowData[col.field] }}
+                    <span *ngIf="!rowData[col.field]">Field not found: {{ col.field }}</span>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 <div class = "user-pop-up-form">
-    <p-button (onClick)="showDialog()" label="Add-User" />
     <p-dialog header="Add-User" [modal]="true" [(visible)]="visible" [contentStyle]="{'dialog-box':null}">
-        <form class = "add-user-form" #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+        <form class = "add-user-form" #userForm="ngForm" (ngSubmit)="onSubmit()">
             <div class = "container">
                 <div class="row"></div>
                     <p-floatLabel>
-                        <input class="first-name-box" pInputText id="firstName" name="firstName" ngModel required>
-                        <div class="error-message" *ngIf="!userForm.submitted  && !userForm.controls['firstName']?.valid && userForm.controls['firstName']?.touched">
+                        <input class="first-name-box" pInputText id="firstname" name="firstname" [(ngModel)]="firstname" required>
+                        <div class="error-message" *ngIf="!userForm.submitted  && !userForm.controls['firstname']?.valid && userForm.controls['firstname']?.touched">
                         *Name is required.
                         </div>
                         <label class="text-label">First Name</label>
                     </p-floatLabel>
                 <div class="row"></div>
                     <p-floatLabel>
-                        <input class="surname-box" pInputText id="surname" name="surname" ngModel required> 
-                        <div class="error-message" *ngIf="!userForm.submitted && !userForm.controls['surname']?.valid && userForm.controls['surname']?.touched">
+                        <input class="lastname-box" pInputText id="lastname" name="lastname" [(ngModel)]="lastname" required> 
+                        <div class="error-message" *ngIf="!userForm.submitted && !userForm.controls['lastname']?.valid && userForm.controls['lastname']?.touched">
                             *Surname is required.
                         </div>
                         <label class="text-label"> Surname </label>
                     </p-floatLabel>
                 <div class="row"></div>
                     <p-floatLabel>
-                        <input class="property-name-box" pInputText id="propertyName" name="propertyName" ngModel required>
-                        <div class="error-message" *ngIf="!userForm.submitted && !userForm.controls['propertyName']?.valid && userForm.controls['propertyName']?.touched">
+                        <input class="property-name-box" pInputText id="propertyname" name="propertyname"  [(ngModel)]="propertyname" required>
+                        <div class="error-message" *ngIf="!userForm.submitted && !userForm.controls['propertyname']?.valid && userForm.controls['propertyname']?.touched">
                             *Property Name is required.
                         </div>
                         <label class="text-label"> Property Name </label> 
                     </p-floatLabel>
                 <div class="row"></div>
                     <p-floatLabel>
-                        <input class="user-email-box" pInputText id="userEmail" type="email" name="email" ngModel required email="true" >
-                        <div class="error-message" *ngIf="!userForm.submitted && !userForm.controls['userEmail']?.valid && userForm.controls['userEmail']?.touched">
+                        <input class="user-email-box" pInputText id="email" type="email" name="email"  [(ngModel)]="email" required email="true" >
+                        <div class="error-message" *ngIf="!userForm.submitted && !userForm.controls['email']?.valid && userForm.controls['email']?.touched">
                             *Email is required.
                         </div>
                         <label class="text-label"> Email </label> 
                     </p-floatLabel>
                 <div class="row"></div>
                     <p-floatLabel>
-                        <input class="tp-number-box" pInputText id="telephoneNumber" name="telephoneNumber" ngModel required #telephoneNumber="ngModel" tpValidator maxlength="10">
-                        <div class="error-message" *ngIf="!userForm.submitted && !userForm.controls['telephoneNumber']?.valid && userForm.controls['telephoneNumber']?.touched">
+                        <input class="tp-number-box" pInputText id="telephonenumber" name="telephonenumber"  [(ngModel)]="telephonenumber" required #telephoneNumber="ngModel" tpValidator maxlength="10">
+                        <div class="error-message" *ngIf="!userForm.submitted && !userForm.controls['telephonenumber']?.valid && userForm.controls['telephonenumber']?.touched">
                             *A 10-digit mobile number is required.
                         </div>
                         <label class="text-label"> Mobile Number </label> 
                     </p-floatLabel>
                 <div class="row1"></div>
                     <div class="button-container">
-                        <p-button class="add-btn" [disabled]="!userForm.valid" type="submit" [raised]="true" [rounded]="true" label="Add" severity="warning"/>
+                        <p-button class="add-btn" (onClick)="closeDialog()" [disabled]="!userForm.valid" type="submit" [raised]="true" [rounded]="true" label="Add" severity="warning"/>
                     </div>  
             </div>
         </form>
     </p-dialog>
+</div>
 </div>

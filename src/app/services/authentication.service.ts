@@ -1,6 +1,6 @@
 import { EnvironmentInjector, Inject, Injectable } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
-import { User } from '../interfaces/user';
+import { Admin } from '../interfaces/admin';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
@@ -11,7 +11,7 @@ export class AuthenticationService {
   router = inject(Router);
   constructor() {}
 
-  generateToken(person: User): string {
+  generateToken(person: Admin): string {
     const personData = {
       userName: person.username,
       userEmail: person.email,

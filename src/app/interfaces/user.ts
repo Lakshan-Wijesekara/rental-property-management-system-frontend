@@ -1,7 +1,7 @@
 export interface User {
-  password: string;
-  username: string;
+  firstname: string;
+  lastname: string;
+  propertyname: string;
   email: string;
-  gender: string;
+  telephonenumber: string;
 }
-//way of data coming from the database/source

@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { MatInputModule } from '@angular/material/input';
 import { DialogModule } from 'primeng/dialog';
+import { Table, TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -36,6 +37,7 @@ import { DialogModule } from 'primeng/dialog';
     InputTextModule,
     MatInputModule,
     DialogModule,
+    TableModule,
   ],
   exports: [
     LoginComponent,
@@ -55,6 +57,7 @@ import { DialogModule } from 'primeng/dialog';
     InputTextModule,
     MatInputModule,
     DialogModule,
+    TableModule,
   ],
   providers: [],
 })

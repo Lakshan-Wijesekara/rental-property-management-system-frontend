@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../../services/userdata.service';
+import { DataService } from '../../services/admindata.service';
 import { Router } from '@angular/router';
-import { User } from '../../interfaces/user';
+import { Admin } from '../../interfaces/admin';
 import { MessageService } from 'primeng/api';
 import { EncryptionService } from '../../services/encryption.service';
 import { AuthenticationService } from '../../services/authentication.service';
@@ -14,7 +14,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 export class LoginComponent implements OnInit {
   userName: string = ''; //entered username by user
   password: string = ''; //entered password by user
-  users: User[] = [];
+  users: Admin[] = [];
   loading: boolean = false;
 
   constructor(
@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
       return;
     }
     const person = this.users.find(
-      (user: User) => user.username === this.userName
+      (user: Admin) => user.username === this.userName
     );
     //Compare the passwords
     if (
