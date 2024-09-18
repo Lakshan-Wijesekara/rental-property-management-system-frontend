@@ -17,6 +17,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MatInputModule } from '@angular/material/input';
 import { DialogModule } from 'primeng/dialog';
 import { Table, TableModule } from 'primeng/table';
+import { Breadcrumb, BreadcrumbModule } from 'primeng/breadcrumb';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -38,6 +39,7 @@ import { Table, TableModule } from 'primeng/table';
     MatInputModule,
     DialogModule,
     TableModule,
+    BreadcrumbModule,
   ],
   exports: [
     LoginComponent,
@@ -58,6 +60,7 @@ import { Table, TableModule } from 'primeng/table';
     MatInputModule,
     DialogModule,
     TableModule,
+    BreadcrumbModule,
   ],
   providers: [],
 })

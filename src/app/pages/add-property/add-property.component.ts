@@ -10,9 +10,8 @@ import { City } from '../../interfaces/city';
 import { PropertydataService } from '../../services/propertydata.service';
 import { Property } from '../../interfaces/property';
 import { MessageService } from 'primeng/api';
-import { Observable } from 'rxjs';
 @Component({
-  selector: 'app-add-property',
+  selector: 'app-properties',
   templateUrl: './add-property.component.html',
   styleUrl: './add-property.component.scss',
 })

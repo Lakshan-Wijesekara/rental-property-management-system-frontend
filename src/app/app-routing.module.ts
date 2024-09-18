@@ -7,7 +7,7 @@ import { appGuard } from './guards/app.guard';
 import { AddPropertyComponent } from './pages/add-property/add-property.component';
 import { AddUserComponent } from './pages/add-user/add-user.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   {
     path: 'login',
@@ -18,14 +18,26 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent,
     canActivate: [appGuard],
+    data: {
+      title: 'Home',
+      icon: 'pi-home',
+    },
   },
   {
-    path: 'add-property',
+    path: 'properties',
     component: AddPropertyComponent,
+    data: {
+      title: 'Properties',
+      icon: 'pi-building',
+    },
   },
   {
-    path: 'add-user',
+    path: 'users',
     component: AddUserComponent,
+    data: {
+      title: 'Users',
+      icon: 'pi-users',
+    },
   },
 ];
 

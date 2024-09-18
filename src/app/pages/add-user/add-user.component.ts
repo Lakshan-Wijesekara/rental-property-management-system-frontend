@@ -9,7 +9,7 @@ interface Column {
   header: string;
 }
 @Component({
-  selector: 'app-add-user',
+  selector: 'app-users',
   templateUrl: './add-user.component.html',
   styleUrl: './add-user.component.scss',
 })

@@ -18,6 +18,8 @@ import { HomeModule } from './pages/home/home.module';
 import { AddUserComponent } from './pages/add-user/add-user.component';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { ValidatorDirDirective } from './directives/tpvalidator.directive';
+import { BreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +27,7 @@ import { ValidatorDirDirective } from './directives/tpvalidator.directive';
     HeaderComponent,
     AddUserComponent,
     ValidatorDirDirective,
+    BreadcrumbComponent,
   ],
   imports: [
     AppRoutingModule,

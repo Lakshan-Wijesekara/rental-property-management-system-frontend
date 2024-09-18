@@ -10,7 +10,6 @@
     font-size: large;
 }
 
-
 .header{
     display: block;
     margin-left: auto;
@@ -20,7 +19,7 @@
 :host ::ng-deep .main-menu{
     display: flexbox;
     align-items:center;
-    height: 100px;
+    height: 76px;
     width: 100%;
 }
 

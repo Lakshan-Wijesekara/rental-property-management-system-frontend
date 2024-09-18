@@ -60,12 +60,12 @@ export class HeaderComponent implements OnInit {
       {
         label: 'Properties',
         icon: 'pi pi-building-columns',
-        command: () => this.router.navigate(['/add-property']),
+        command: () => this.router.navigate(['/properties']),
       },
       {
         label: 'Users',
         icon: 'pi pi-users',
-        command: () => this.router.navigate(['/add-user']),
+        command: () => this.router.navigate(['/users']),
       },
     ];
   }
