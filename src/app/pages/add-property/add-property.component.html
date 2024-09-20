@@ -1,7 +1,14 @@
-<p-button class="add-btn" (onClick)="showDialog()" label="Add-Property"/>
+<div class="parent-container">
+    <p-button class="add-btn" (onClick)="showDialog()" label="Add-Property"/>
+    <input pInputText type="text" (keyup)="getProperties(searchText)" [(ngModel)]="searchText" placeholder="Search property">
+</div>
 <div class="row"></div>
 <div class="card">
-<p-table [value]="getProperties()" [tableStyle]="{'min-width': '50rem'}">
+<p-table 
+    [value]="getProperties(searchText)" 
+    [tableStyle]="{'min-width': '50rem'}"
+    [rows]="10"
+    [paginator]="true">
     <ng-template pTemplate="header">
         <tr>
             <th>Selected City</th>

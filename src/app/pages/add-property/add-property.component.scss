@@ -12,6 +12,11 @@ html,body {
     margin: 25px ;
 }
 
+.parent-container{
+    display: inline-flex;
+    gap: 950px;
+}
+
 .property-card{
     border-style: none;
 }

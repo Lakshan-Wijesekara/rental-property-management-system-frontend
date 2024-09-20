@@ -20,6 +20,9 @@ export class AddPropertyComponent implements OnInit {
   inputValue: string | undefined;
   visible: boolean = false;
 
+  //Get the input from the property search box
+  searchText: string = '';
+
   reactiveForm: FormGroup = new FormGroup({
     selectedCity: new FormControl('', [Validators.required]),
     propertyName: new FormControl('', [Validators.required]),
@@ -58,7 +61,20 @@ export class AddPropertyComponent implements OnInit {
     });
   }
 
-  getProperties(): Property[] {
+  //When calling the property list, if there's a value in propertySearch box the filter runs
+  getProperties(searchText: string): Property[] {
+    if (searchText) {
+      let property = this.propertyDataService
+        .properties()
+        .filter(
+          (p) =>
+            p.selectedCity.toLowerCase().includes(searchText.toLowerCase()) ||
+            p.propertyName.toLowerCase().includes(searchText.toLowerCase()) ||
+            p.propertyArea.toString().includes(searchText) ||
+            p.monthlyRental.toString().includes(searchText)
+        );
+      return property;
+    }
     return this.propertyDataService.properties();
   }
 

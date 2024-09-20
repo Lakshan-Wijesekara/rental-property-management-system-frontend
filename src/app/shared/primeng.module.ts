@@ -16,8 +16,10 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { MatInputModule } from '@angular/material/input';
 import { DialogModule } from 'primeng/dialog';
-import { Table, TableModule } from 'primeng/table';
-import { Breadcrumb, BreadcrumbModule } from 'primeng/breadcrumb';
+import { TableModule } from 'primeng/table';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -40,6 +42,8 @@ import { Breadcrumb, BreadcrumbModule } from 'primeng/breadcrumb';
     DialogModule,
     TableModule,
     BreadcrumbModule,
+    IconFieldModule,
+    InputIconModule,
   ],
   exports: [
     LoginComponent,
@@ -61,6 +65,8 @@ import { Breadcrumb, BreadcrumbModule } from 'primeng/breadcrumb';
     DialogModule,
     TableModule,
     BreadcrumbModule,
+    IconFieldModule,
+    InputIconModule,
   ],
   providers: [],
 })

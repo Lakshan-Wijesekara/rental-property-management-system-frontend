@@ -15,13 +15,15 @@ interface Column {
 })
 export class AddUserComponent implements OnInit {
   visible: boolean = false;
-  cols!: Column[];
 
   firstname: string = '';
   lastname: string = '';
   propertyname: string = '';
   email: string = '';
   telephonenumber: string = '';
+
+  //Input from the user from search box
+  searchText: string = '';
 
   constructor(
     private userDataService: UserdataService,
@@ -30,19 +32,37 @@ export class AddUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchUsers();
+  }
 
-    this.cols = [
+  // users signal from user data service
+  // If there's a value inside search box the filter runs else all the values will return
+  getUsers(searchText: string): User[] {
+    if (searchText) {
+      let user = this.userDataService
+        .users()
+        .filter(
+          (p) =>
+            p.firstname.toLowerCase().includes(searchText.toLowerCase()) ||
+            p.lastname.toLowerCase().includes(searchText.toLowerCase()) ||
+            p.propertyname.toLowerCase().includes(searchText.toLowerCase()) ||
+            p.email.toLowerCase().includes(searchText.toLowerCase()) ||
+            p.telephonenumber.toLowerCase().includes(searchText.toLowerCase())
+        );
+      return user;
+    } else {
+      return this.userDataService.users();
+    }
+  }
+
+  getColumns(): Column[] {
+    let userTable = [
       { field: 'firstname', header: 'First Name' },
       { field: 'lastname', header: 'Last Name' },
       { field: 'propertyname', header: 'Property Name' },
       { field: 'email', header: 'Email Address' },
       { field: 'telephonenumber', header: 'Telephone Number' },
     ];
-  }
-
-  // users signal from user data service
-  getUsers(): User[] {
-    return this.userDataService.users();
+    return userTable;
   }
 
   addUser(): void {

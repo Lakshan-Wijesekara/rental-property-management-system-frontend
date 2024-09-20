@@ -1,7 +1,16 @@
-<p-button (onClick)="showDialog()" label="Add-User" />
-<div class="row"></div>
+<div class="parent-container">
+    <p-button (onClick)="showDialog()" label="Add-User" />
+    <div class="row"></div>
+    <input pInputText type="text" (input)="getUsers(searchText)" [(ngModel)]="searchText" placeholder="Search user" />
+    </div>
+    <div class="row"></div>
 <div class="card">
-    <p-table [columns]="cols" [value]="getUsers()" [tableStyle]="{ 'min-width': '50rem' }">
+    <p-table
+    [columns]="getColumns()" 
+    [value]="getUsers(searchText)" 
+    [rows]="10"
+    [paginator]="true"
+    [tableStyle]="{ 'min-width': '50rem' }">
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th *ngFor="let col of columns">
