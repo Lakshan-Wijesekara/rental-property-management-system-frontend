@@ -40,6 +40,44 @@ export class AddPropertyComponent implements OnInit {
     ]),
   });
 
+  get selectedCity() {
+    return this.reactiveForm.get('selectedCity');
+  }
+
+  set selectedCity(value: any) {
+    this.reactiveForm.get('selectedCity')?.setValue(value);
+  }
+
+  get propertyName() {
+    return this.reactiveForm.get('propertyName');
+  }
+
+  set propertyName(value: any) {
+    this.reactiveForm.get('propertyName')?.setValue(value);
+  }
+
+  get propertyArea() {
+    return this.reactiveForm.get('propertyName');
+  }
+
+  set propertyArea(value: any) {
+    this.reactiveForm.get('propertyArea')?.setValue(value);
+  }
+
+  get monthlyRental() {
+    return this.reactiveForm.get('monthlyRental');
+  }
+
+  set monthlyRental(value: any) {
+    this.reactiveForm.get('monthlyRental')?.setValue(value);
+  }
+
+  // updateForm(propertyform: FormGroupDirective) {
+  //   this.selectedCity = propertyform.value.selectedCity;
+  //   this.propertyName = propertyform.value.propertyName;
+  //   this.propertyArea = propertyform.value.propertyArea;
+  //   this.monthlyRental = propertyform.value.monthlyRental;
+  // }
   constructor(
     private cityDataService: CitydataService,
     private markerService: MarkerService,
@@ -55,6 +93,24 @@ export class AddPropertyComponent implements OnInit {
   //Show the pop-up
   showDialog(): void {
     this.isAddPropertyVisible = true;
+  }
+
+  updateProperty(updateForm: FormGroupDirective): void {
+    const updatedProperty = {
+      selectedCity: updateForm.value.selectedCity,
+      propertyName: updateForm.value.propertyName,
+      propertyArea: updateForm.value.propertyArea,
+      monthlyRental: updateForm.value.monthlyRental,
+    };
+    return this.propertyDataService.updateProperty(updatedProperty);
+  }
+
+  viewDialog(property: Property) {
+    this.view = true;
+    this.selectedCity = property.selectedCity;
+    this.propertyName = property.propertyName;
+    this.propertyArea = property.propertyArea;
+    this.monthlyRental = property.monthlyRental;
   }
 
   //Close the pop-up

@@ -36,4 +36,12 @@ export class PropertydataService {
       return successResponse;
     }
   }
+
+  updateProperty(updatedProperty: Property) {
+    this.properties().forEach((element, index) => {
+      if (element.selectedCity == updatedProperty.selectedCity) {
+        this.properties().splice(index, 1, updatedProperty);
+      }
+    });
+  }
 }
