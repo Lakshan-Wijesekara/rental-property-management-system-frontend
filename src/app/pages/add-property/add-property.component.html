@@ -26,8 +26,8 @@
             <td>
                 <div class="view-form">
                     <p-button (onClick)="viewDialog(property)" label="View Property" />
-                    <p-dialog  header="Add-Property" [modal]="true" [(visible)]="view">
-                        <form class = "add-property-form" #updateForm="ngForm" [formGroup] = "reactiveForm" (ngSubmit)="updateProperty(updateForm)">
+                    <p-dialog  header="Add-Property" [modal]="true" [(visible)]="isUpdatePropertyVisible">
+                        <form class = "add-property-form" #updateForm="ngForm" [formGroup] = "reactiveForm" (ngSubmit)="updateProperty(updateForm, id)">
                             <div class = "container">
                                 <p-dropdown 
                                     [formControlName]="'selectedCity'"
@@ -61,7 +61,7 @@
                                 </p-floatLabel>
                                 <div class="row-button"></div>
                                 <div class="button-container">
-                                    <p-button class="submit-btn" type="submit"  [disabled]="!propertyForm.valid" [raised]="true" label="Submit" severity="warning"  />
+                                    <p-button class="submit-btn"  (onClick)="closeDialog()"  type="submit"  [disabled]="!propertyForm.valid" [raised]="true" label="Submit" severity="warning"  />
                                 </div>
                             </div>
                         </form>
@@ -73,7 +73,7 @@
     </ng-template>
 </p-table>
 <div class = "pop-up-form">
-    <p-dialog  header="Add-Property" [modal]="true" [(visible)]="visible">
+    <p-dialog  header="Add-Property" [modal]="true" [(visible)]="isAddPropertyVisible">
         <form class = "add-property-form" #propertyForm="ngForm" [formGroup] = "reactiveForm" (ngSubmit)="addProperty(propertyForm)">
             <div class = "container">
                 <p-dropdown 

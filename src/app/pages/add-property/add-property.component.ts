@@ -72,12 +72,6 @@ export class AddPropertyComponent implements OnInit {
     this.reactiveForm.get('monthlyRental')?.setValue(value);
   }
 
-  // updateForm(propertyform: FormGroupDirective) {
-  //   this.selectedCity = propertyform.value.selectedCity;
-  //   this.propertyName = propertyform.value.propertyName;
-  //   this.propertyArea = propertyform.value.propertyArea;
-  //   this.monthlyRental = propertyform.value.monthlyRental;
-  // }
   constructor(
     private cityDataService: CitydataService,
     private markerService: MarkerService,
@@ -95,8 +89,10 @@ export class AddPropertyComponent implements OnInit {
     this.isAddPropertyVisible = true;
   }
 
-  updateProperty(updateForm: FormGroupDirective): void {
+  //To update the property with a new value
+  updateProperty(updateForm: FormGroupDirective, id: number): void {
     const updatedProperty = {
+      id: id,
       selectedCity: updateForm.value.selectedCity,
       propertyName: updateForm.value.propertyName,
       propertyArea: updateForm.value.propertyArea,
@@ -105,8 +101,10 @@ export class AddPropertyComponent implements OnInit {
     return this.propertyDataService.updateProperty(updatedProperty);
   }
 
+  //View property will assign the values according to changes in the DOM
   viewDialog(property: Property) {
-    this.view = true;
+    this.isUpdatePropertyVisible = true;
+    this.id = property.id;
     this.selectedCity = property.selectedCity;
     this.propertyName = property.propertyName;
     this.propertyArea = property.propertyArea;
