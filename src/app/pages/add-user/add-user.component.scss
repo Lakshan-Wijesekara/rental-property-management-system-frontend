@@ -13,7 +13,8 @@ html,body {
 }
 
 .parent-container{
-    display: flex;
+    display: inline-flex;
+    gap: 1000px;
 }
 
 .search{

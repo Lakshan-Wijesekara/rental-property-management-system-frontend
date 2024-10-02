@@ -1,36 +1,41 @@
 <div class="parent-container">
     <div class="row"></div>
-    <input class="search" pInputText type="text" (input)="getUsers(searchText)" [(ngModel)]="searchText" placeholder="Search user" />
 </div>
+    <input pInputText type="text" (input)="getUsers(searchText)" [(ngModel)]="searchText" placeholder="Search user" />
     <div class="row"></div>
 <div class="card">
     <p-table
-    [columns]="getColumns()" 
     [value]="getUsers(searchText)" 
     [rows]="10"
     [paginator]="true"
     [tableStyle]="{ 'min-width': '50rem' }">
-        <ng-template pTemplate="header" let-columns>
-            <tr>
-                <th *ngFor="let col of columns">
-                    {{ col.header }}
-                </th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr>
-                <td *ngFor="let col of columns">
-                    {{ rowData[col.field] }}
-                    <span *ngIf="!rowData[col.field]">Field not found: {{ col.field }}</span>
-                </td>
-            </tr>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Property Name</th>
+            <th>Email Address</th>
+            <th>Telephone Number</th>
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+        <tr>
+            <td>{{user.firstname}}</td>
+            <td>{{user.lastname}}</td>
+            <td>{{user.propertyname}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.telephonenumber}}</td>
+            <td >  
+                <p-button  (onClick)="viewUserForm(user)" label="Update User" />
+               </td>
         </ng-template>
     </p-table>
 </div>
     <div class="row"></div>
 <p-button (onClick)="showDialog()" label="Add-User" />
 <div class = "user-pop-up-form">
-    <p-dialog header="Add-User" [modal]="true" [(visible)]="visible" [contentStyle]="{'dialog-box':null}">
+    <p-dialog [header]="currentPropertyProcess == _propertyVisibility.AddProperty ? 'Add User' : 'Update User'" [modal]="true" [(visible)]="isAddUserFormvisible" [contentStyle]="{'dialog-box':null}">
         <form class = "add-user-form" #userForm="ngForm" (ngSubmit)="onSubmit()">
             <div class = "container">
                 <div class="row"></div>
@@ -75,9 +80,10 @@
                     </p-floatLabel>
                 <div class="row1"></div>
                     <div class="button-container">
-                        <p-button class="add-btn" (onClick)="closeDialog()" [disabled]="!userForm.valid" type="submit" [raised]="true" [rounded]="true" label="Add" severity="warning"/>
+                        <p-button class="add-btn" (onClick)="closeDialog()" [disabled]="!userForm.valid" type="submit" [raised]="true" [rounded]="true" [label]="currentPropertyProcess==_propertyVisibility.AddProperty? 'Add User': 'Update User'" severity="warning"/>
                     </div>  
             </div>
         </form>
     </p-dialog>
+</div>
 </div>

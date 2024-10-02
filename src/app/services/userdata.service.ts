@@ -38,4 +38,12 @@ export class UserdataService {
       return successResponse;
     }
   }
+
+  updateUser(updatedUser: User) {
+    this.users().forEach((element, index) => {
+      if ((element.id = updatedUser.id)) {
+        this.users().splice(index, 1, updatedUser);
+      }
+    });
+  }
 }
