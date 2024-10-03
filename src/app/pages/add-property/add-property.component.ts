@@ -90,20 +90,21 @@ export class AddPropertyComponent implements OnInit {
   }
 
   //To update the property with a new value
-  updateProperty(updateForm: FormGroupDirective, id: number): void {
+  updateProperty(propertyform: FormGroupDirective, id: number): void {
     const updatedProperty = {
       id: id,
-      selectedCity: updateForm.value.selectedCity,
-      propertyName: updateForm.value.propertyName,
-      propertyArea: updateForm.value.propertyArea,
-      monthlyRental: updateForm.value.monthlyRental,
+      selectedCity: propertyform.value.selectedCity,
+      propertyName: propertyform.value.propertyName,
+      propertyArea: propertyform.value.propertyArea,
+      monthlyRental: propertyform.value.monthlyRental,
     };
     return this.propertyDataService.updateProperty(updatedProperty);
   }
 
   //View property will assign the values according to changes in the DOM
   viewDialog(property: Property) {
-    this.isUpdatePropertyVisible = true;
+    this.propertyShowState = this.propertyVisibility.updateProperty;
+    this.isAddPropertyVisible = true;
     this.id = property.id;
     this.selectedCity = property.selectedCity;
     this.propertyName = property.propertyName;
@@ -182,6 +183,16 @@ export class AddPropertyComponent implements OnInit {
         summary: 'Error',
         detail: 'Error occurred',
       });
+    }
+  }
+
+  onSubmit(propertyform: FormGroupDirective, id: number) {
+    if (this.propertyShowState == this.propertyVisibility.AddProperty) {
+      this.addProperty(propertyform);
+    } else if (
+      this.propertyShowState == this.propertyVisibility.updateProperty
+    ) {
+      this.updateProperty(propertyform, id);
     }
   }
 
