@@ -1,7 +1,7 @@
 <div class="parent-container">
+    <p-button (onClick)="showDialog()" label="Add Property" />
     <input class="search" pInputText type="text" (keyup)="getProperties(searchText)" [(ngModel)]="searchText" placeholder="Search property">
 </div>
-<div class="row"></div>
 <div class="card">
 <p-table 
     [value]="getProperties(searchText)" 
@@ -27,11 +27,7 @@
             <td>
                 <div class="view-form">
                     <p-button (onClick)="viewDialog(property)" label="Update Property" />
-                </div>
-            </td>
-            <td>
-                <div class="view-form">
-                    <p-button (onClick)="viewDialog(property)" label="Update Property" />
+
                 </div>
             </td>
         </tr>
@@ -40,124 +36,50 @@
 <div class = "pop-up-form">
     <p-dialog  [header]='propertyShowState==propertyVisibility.AddProperty? "Add Property": "Update Property"' [modal]="true" [(visible)]="isAddPropertyVisible">
         <form class = "add-property-form" #propertyForm="ngForm" [formGroup] = "reactiveForm" (ngSubmit)="onSubmit(propertyForm , id)">
-    <p-dialog  [header]='propertyShowState==propertyVisibility.AddProperty? "Add Property": "Update Property"' [modal]="true" [(visible)]="isAddPropertyVisible">
-        <form class = "add-property-form" #propertyForm="ngForm" [formGroup] = "reactiveForm" (ngSubmit)="onSubmit(propertyForm , id)">
-            <div class = "container">
-                <p-dropdown 
-                    [formControlName]="'selectedCity'"
-                    [options]="groupedCities" 
-                    placeholder="Select the City"
-                    [group]="true">
-                        <ng-template let-group pTemplate="group">
-                            <div class="flex align-items-center">
-                                <img 
-                                    src=".\assets\Western Province logo.png"
-                                    class="western-flag" 
-                                    />
-                                <span>{{ group.label }}</span>
-                            </div>
-                        </ng-template>
-                </p-dropdown>
-                <div class="row"></div>
-                <p-floatLabel>
-                    <input class="property-name-box" pInputText id="Property-Name" [formControlName]="'propertyName'"/>
-                    <label>Property Name</label>
-                </p-floatLabel>
-                <div class="row"></div>
-                <p-floatLabel>
-                    <input class="property-size" pInputText id="property-size" [formControlName]="'propertyArea'"/> 
-                    <label> Property Area (sq.ft) </label>
-                </p-floatLabel>
-                <div class="row"></div>
-                <p-floatLabel>
-                    <input class="monthly-rental" pInputText id="monthly-rental" [formControlName]="'monthlyRental'"/>
-                    <label> Monthly Rental </label> 
-                </p-floatLabel>
-                <div class="row-button"></div>
-                <div class="button-container">
-                    <p-button class="submit-btn"  [disabled]="!propertyForm.valid" type="submit" [raised]="true" [label]="propertyShowState==propertyVisibility.AddProperty? 'Add':'Update'" severity="warning"  />
-                    <p-button class="submit-btn"  [disabled]="!propertyForm.valid" type="submit" [raised]="true" [label]="propertyShowState==propertyVisibility.AddProperty? 'Add':'Update'" severity="warning"  />
+            <div class = "parent-form">
+                <div class = "column">
+                    <p-dropdown 
+                        [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="dropdownSelectedCity" 
+                        (onChange)="getPropertyLocation(dropdownSelectedCity)"
+                        [options]="groupedCities" 
+                        placeholder="Select the City"
+                        [group]="true">
+                            <ng-template let-group pTemplate="group">
+                                <div class="flex align-items-center">
+                                    <img 
+                                        src=".\assets\Western Province logo.png"
+                                        class="western-flag" 
+                                        />
+                                    <span>{{ group.label }}</span>
+                                </div>
+                            </ng-template>
+                    </p-dropdown>
+                    <div class="row"></div>
+                    <app-map [lat]='propertyShowState == propertyVisibility.AddProperty? (this.selectedPropertyLocation?.lat ?? 6.9271) : (this.selectedProperty?.latitude ?? 0)' [lng]='propertyShowState == propertyVisibility.AddProperty? (this.selectedPropertyLocation?.lng ?? 79.8612) : (this.selectedProperty?.longtitude ?? 0)'></app-map>
+                    </div>
+                    <div class="column">
+                    <p-floatLabel>
+                        <input class="property-name-box" pInputText id="Property-Name" [formControlName]="'propertyName'"/>
+                        <label class="floatLabel">Property Name</label>
+                    </p-floatLabel>
+                    <div class="row"></div>
+                    <p-floatLabel>
+                        <input class="property-size" pInputText id="property-size" [formControlName]="'propertyArea'"/> 
+                        <label class="floatLabel"> Property Area (sq.ft) </label>
+                    </p-floatLabel>
+                    <div class="row"></div>
+                    <p-floatLabel>
+                        <input class="monthly-rental" pInputText id="monthly-rental" [formControlName]="'monthlyRental'"/>
+                        <label class="floatLabel"> Monthly Rental </label> 
+                    </p-floatLabel>
+                    <div class="row-button"></div>
+                    <div class="button-container">
+                        <p-button class="submit-btn"  [disabled]="!propertyForm.valid" type="submit" [raised]="true" [label]="propertyShowState==propertyVisibility.AddProperty? 'Add':'Update'" severity="warning"  />
+                    </div>
                 </div>
             </div>
         </form>
     </p-dialog>
 </div>
 </div>
-
-
-<div class="card property-table">
-    <p-table 
-        [value]="getProperties(searchText)" 
-        [tableStyle]="{'min-width': '50rem'}"
-        [rows]="10"
-        [paginator]="true">
-        <ng-template pTemplate="header">
-            <tr>
-                <th>Selected City</th>
-                <th>Property Name</th>
-                <th>Property Area</th>
-                <th>Monthly Rental</th>
-                <th></th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-property>
-            <tr>
-                <td>{{property.selectedCity}}</td>
-                <td>{{property.propertyName}}</td>
-                <td>{{property.propertyArea}}</td>
-                <td>{{property.monthlyRental}}</td>
-                <td>
-                    <p-button (onClick)="viewProperty(property)" label="View Property" />
-                    <p-dialog header="Property Location" [(visible)]="isViewPropertyVisible" [style]="{ width: '25rem' }">
-                        <span class="p-text-secondary block mb-5">This is the property location</span>
-                        <div class="row"></div>
-                        <app-map [lat]="this.selectedProperty?.latitude || 0" [lng]="this.selectedProperty?.longtitude || 0"></app-map>
-                    </p-dialog>
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
-</div>
-<p-button class="add-button" (onClick)="showDialog()" label="Add-Property"/>
-<p-dialog [resizable]="true" header="Add-Property" [modal]="true" [(visible)]="isAddPropertyVisible">
-    <form class = "add-property-form" #propertyForm="ngForm" [formGroup]="reactiveForm" (ngSubmit)="addProperty(propertyForm)">
-        <div class = "column">
-            <p-dropdown 
-                [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="dropdownSelectedCity" 
-                (onChange)="getPropertyLocation(dropdownSelectedCity)"
-                [options]="groupedCities" 
-                placeholder="Select the City"
-                [group]="true">
-                    <ng-template let-group pTemplate="group">
-                        <div class="flex align-items-center">
-                            <img 
-                                src=".\assets\Western Province logo.png"
-                                class="western-flag" 
-                                />
-                            <span>{{ group.label }}</span>
-                        </div>
-                    </ng-template>
-            </p-dropdown>
-            <div class="row"></div>
-            <app-map [lat]="this.selectedPropertyLocation?.lat || 6.9271" [lng]="this.selectedPropertyLocation?.lng || 79.8612"></app-map>
-        </div>
-        <div class = "column">
-            <p-floatLabel>
-                <input class="property-name-box" pInputText id="Property-Name" [formControlName]="'propertyName'"/>
-                <label class="float-label">Property Name</label>
-            </p-floatLabel>
-            <p-floatLabel>
-                <input class="property-size" pInputText id="property-size" [formControlName]="'propertyArea'"/> 
-                <label class="float-label"> Property Area (sq.ft) </label>
-            </p-floatLabel>
-            <p-floatLabel>
-                <input class="monthly-rental" pInputText id="monthly-rental" [formControlName]="'monthlyRental'"/>
-                <label class="float-label"> Monthly Rental </label> 
-            </p-floatLabel>
-            <div class="button-container">
-                <p-button class="submit-btn" (onclick)="closeDialog()" [disabled]="!propertyForm.valid" type="submit" [raised]="true" label="Submit" severity="warning"  />
-            </div>
-        </div>  
-    </form>
-</p-dialog>

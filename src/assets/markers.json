@@ -1,6 +1,7 @@
 [
     {"lat": 6.9271, "lng": 79.8612, "id":"Colombo" },
     {"lat": 7.0014, "lng": 79.9499,"id":"Kadawatha" },
+    {"lat": 7.0897, "lng": 79.9925,"id":"Gampaha" },
     {"lat": 7.2906, "lng": 80.6336,"id":"Kandy" },
     {"lat": 7.1643, "lng": 80.5696,"id":"Gampola" },
     {"lat": 8.3114, "lng": 80.4037,"id":"Anuradhapura" },
