@@ -10,6 +10,11 @@ import { City } from '../../interfaces/city';
 import { PropertydataService } from '../../services/propertydata.service';
 import { Property } from '../../interfaces/property';
 import { MessageService } from 'primeng/api';
+
+enum propertyViewState {
+  AddProperty = 'addProperty',
+  updateProperty = 'updateProperty',
+}
 @Component({
   selector: 'app-properties',
   templateUrl: './add-property.component.html',
@@ -19,9 +24,12 @@ export class AddPropertyComponent implements OnInit {
   groupedCities: City[] = [];
   inputValue: string | undefined;
   isAddPropertyVisible: boolean = false;
-  isUpdatePropertyVisible: boolean = false;
+  // isUpdatePropertyVisible: boolean = false;
   id: number = 0;
-
+  //Enum was declared to track the state of propertyView
+  propertyVisibility = propertyViewState;
+  //Default assignment to propertyShowState is add property
+  propertyShowState: propertyViewState = propertyViewState.AddProperty;
   //Get the input from the property search box
   searchText: string = '';
 
@@ -82,24 +90,26 @@ export class AddPropertyComponent implements OnInit {
   }
 
   showDialog() {
+    this.propertyShowState = this.propertyVisibility.AddProperty;
     this.isAddPropertyVisible = true;
   }
 
   //To update the property with a new value
-  updateProperty(updateForm: FormGroupDirective, id: number): void {
+  updateProperty(propertyform: FormGroupDirective, id: number): void {
     const updatedProperty = {
       id: id,
-      selectedCity: updateForm.value.selectedCity,
-      propertyName: updateForm.value.propertyName,
-      propertyArea: updateForm.value.propertyArea,
-      monthlyRental: updateForm.value.monthlyRental,
+      selectedCity: propertyform.value.selectedCity,
+      propertyName: propertyform.value.propertyName,
+      propertyArea: propertyform.value.propertyArea,
+      monthlyRental: propertyform.value.monthlyRental,
     };
     return this.propertyDataService.updateProperty(updatedProperty);
   }
 
   //View property will assign the values according to changes in the DOM
   viewDialog(property: Property) {
-    this.isUpdatePropertyVisible = true;
+    this.propertyShowState = this.propertyVisibility.updateProperty;
+    this.isAddPropertyVisible = true;
     this.id = property.id;
     this.selectedCity = property.selectedCity;
     this.propertyName = property.propertyName;
@@ -109,7 +119,6 @@ export class AddPropertyComponent implements OnInit {
 
   closeDialog() {
     this.isAddPropertyVisible = false;
-    this.isUpdatePropertyVisible = false;
   }
 
   getCities(): void {
@@ -135,7 +144,7 @@ export class AddPropertyComponent implements OnInit {
     return this.propertyDataService.properties();
   }
 
-  addProperty(propertyform: FormGroupDirective): void {
+  addProperty(propertyform: FormGroupDirective): any {
     const newProperty = {
       id: this.propertyDataService.properties().length + 1,
       selectedCity: propertyform.value.selectedCity,
@@ -158,6 +167,16 @@ export class AddPropertyComponent implements OnInit {
         summary: 'Error',
         detail: 'Error occurred',
       });
+    }
+  }
+
+  onSubmit(propertyform: FormGroupDirective, id: number) {
+    if (this.propertyShowState == this.propertyVisibility.AddProperty) {
+      this.addProperty(propertyform);
+    } else if (
+      this.propertyShowState == this.propertyVisibility.updateProperty
+    ) {
+      this.updateProperty(propertyform, id);
     }
   }
 
