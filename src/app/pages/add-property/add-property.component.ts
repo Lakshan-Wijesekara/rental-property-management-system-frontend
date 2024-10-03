@@ -72,6 +72,38 @@ export class AddPropertyComponent implements OnInit {
     this.reactiveForm.get('monthlyRental')?.setValue(value);
   }
 
+  get selectedCity() {
+    return this.reactiveForm.get('selectedCity');
+  }
+
+  set selectedCity(value: any) {
+    this.reactiveForm.get('selectedCity')?.setValue(value);
+  }
+
+  get propertyName() {
+    return this.reactiveForm.get('propertyName');
+  }
+
+  set propertyName(value: any) {
+    this.reactiveForm.get('propertyName')?.setValue(value);
+  }
+
+  get propertyArea() {
+    return this.reactiveForm.get('propertyName');
+  }
+
+  set propertyArea(value: any) {
+    this.reactiveForm.get('propertyArea')?.setValue(value);
+  }
+
+  get monthlyRental() {
+    return this.reactiveForm.get('monthlyRental');
+  }
+
+  set monthlyRental(value: any) {
+    this.reactiveForm.get('monthlyRental')?.setValue(value);
+  }
+
   constructor(
     private cityDataService: CitydataService,
     private markerService: MarkerService,
@@ -183,6 +215,16 @@ export class AddPropertyComponent implements OnInit {
         summary: 'Error',
         detail: 'Error occurred',
       });
+    }
+  }
+
+  onSubmit(propertyform: FormGroupDirective, id: number) {
+    if (this.propertyShowState == this.propertyVisibility.AddProperty) {
+      this.addProperty(propertyform);
+    } else if (
+      this.propertyShowState == this.propertyVisibility.updateProperty
+    ) {
+      this.updateProperty(propertyform, id);
     }
   }
 
