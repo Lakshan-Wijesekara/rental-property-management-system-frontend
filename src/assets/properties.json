@@ -1,8 +1,11 @@
 [
     {
+        "id": 1,
         "selectedCity": "Colombo",
         "propertyName": "Prime Lands", 
         "propertyArea": "2000", 
-        "monthlyRental": "50000"
+        "monthlyRental": "50000",
+        "latitude": 6.9271,
+        "longtitude": 79.8612
     }
 ]

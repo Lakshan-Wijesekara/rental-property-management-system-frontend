@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { Property } from '../interfaces/property';
 import { HttpClient } from '@angular/common/http';
-import { Observable, retry } from 'rxjs';
+import { Observable } from 'rxjs';
 import { DataResponse } from '../interfaces/data-response';
 
 @Injectable({

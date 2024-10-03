@@ -55,14 +55,13 @@ export class AddUserComponent implements OnInit {
   }
 
   getColumns(): Column[] {
-    let userTable = [
+    return [
       { field: 'firstname', header: 'First Name' },
       { field: 'lastname', header: 'Last Name' },
       { field: 'propertyname', header: 'Property Name' },
       { field: 'email', header: 'Email Address' },
       { field: 'telephonenumber', header: 'Telephone Number' },
     ];
-    return userTable;
   }
 
   addUser(): void {

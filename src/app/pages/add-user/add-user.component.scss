@@ -13,12 +13,12 @@ html,body {
 }
 
 .parent-container{
-    display: inline-flex;
-    gap: 500px;
+    display: flex;
 }
 
-.row2{
-    justify-content: space-between;
+.search{
+    margin-left: auto;
+    justify-content: flex-end;
 }
 
 .dialog-box{

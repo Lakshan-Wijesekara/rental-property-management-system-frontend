@@ -1,8 +1,5 @@
 import { NgModule } from '@angular/core';
-import {
-  BrowserModule,
-  provideClientHydration,
-} from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,7 +16,8 @@ import { AddUserComponent } from './pages/add-user/add-user.component';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { ValidatorDirDirective } from './directives/tpvalidator.directive';
 import { BreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component';
-
+import { GoogleMapsModule } from '@angular/google-maps';
+import { MapComponent } from './components/map/map.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +26,7 @@ import { BreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component';
     AddUserComponent,
     ValidatorDirDirective,
     BreadcrumbComponent,
+    MapComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -40,13 +39,9 @@ import { BreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component';
     HomeModule,
     ReactiveFormsModule,
     TextFieldModule,
+    GoogleMapsModule,
   ],
-  providers: [
-    provideClientHydration(),
-    provideHttpClient(),
-    ConfirmationService,
-    MessageService,
-  ],
+  providers: [provideHttpClient(), ConfirmationService, MessageService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

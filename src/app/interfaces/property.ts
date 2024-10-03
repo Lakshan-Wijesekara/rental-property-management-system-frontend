@@ -1,6 +1,9 @@
 export interface Property {
-  selectedCity: string;
-  propertyName: string;
-  propertyArea: number;
-  monthlyRental: number;
+  id: number;
+  selectedCity?: string;
+  propertyName?: string;
+  propertyArea?: number;
+  monthlyRental?: number;
+  latitude?: number;
+  longtitude?: number;
 }

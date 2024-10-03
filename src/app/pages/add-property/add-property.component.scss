@@ -8,29 +8,36 @@ html,body {
     margin-top: 22px;
 }
 
+.property-table{
+    margin-bottom: 22px;
+}
+
+.p-text-secondary{
+    margin-bottom: 30px;
+}
+
 .row-button{
     margin: 25px ;
 }
 
 .parent-container{
-    display: inline-flex;
-    gap: 950px;
+    display:flex;
+    margin-bottom: 22px;
 }
 
 .property-card{
     border-style: none;
 }
 
-.container{
-  display:flex;
-  flex-direction: column;
-  align-items: left;
-  height:fit-content;
-  width: 100%;
+.search{
+    margin-left: auto;
+    justify-content: flex-end;
 }
 
 .property-name-box{
-    width: 100%;
+    width: 300px;
+    margin-left: 20px;
+    margin-bottom: 22px;
 }
 
 :host ::ng-deep .p-dropdown{
@@ -38,7 +45,9 @@ html,body {
 }
 
 .monthly-rental{
-    width: 100%;
+    width: 300px;
+    margin-left: 20px;
+    margin-bottom: 22px;
 }
 
 .dropdown-box{
@@ -46,12 +55,18 @@ html,body {
     width: 100%;
 }
 
+.float-label{
+    margin-left: 20px;
+}
+
 .western-flag{
     width: 20px;
 }
 
 .property-size{
-    width: 100%;
+    width: 300px;
+    margin-left: 20px;
+    margin-bottom: 22px;
 }
 
 .button-container{
@@ -63,7 +78,15 @@ html,body {
     float: right;
 }
 
-:host ::ng-deep .p-element{
-    border-radius: 6px;
+.map-view{
+    height: 300px;
+    width: 300px;
 }
 
+.add-property-form{
+    display: flex;
+}
+
+.column{
+    flex: 50%;
+}

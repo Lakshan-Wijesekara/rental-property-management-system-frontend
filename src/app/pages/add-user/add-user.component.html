@@ -1,8 +1,7 @@
 <div class="parent-container">
-    <p-button (onClick)="showDialog()" label="Add-User" />
     <div class="row"></div>
-    <input pInputText type="text" (input)="getUsers(searchText)" [(ngModel)]="searchText" placeholder="Search user" />
-    </div>
+    <input class="search" pInputText type="text" (input)="getUsers(searchText)" [(ngModel)]="searchText" placeholder="Search user" />
+</div>
     <div class="row"></div>
 <div class="card">
     <p-table
@@ -27,6 +26,9 @@
             </tr>
         </ng-template>
     </p-table>
+</div>
+    <div class="row"></div>
+<p-button (onClick)="showDialog()" label="Add-User" />
 <div class = "user-pop-up-form">
     <p-dialog header="Add-User" [modal]="true" [(visible)]="visible" [contentStyle]="{'dialog-box':null}">
         <form class = "add-user-form" #userForm="ngForm" (ngSubmit)="onSubmit()">
@@ -78,5 +80,4 @@
             </div>
         </form>
     </p-dialog>
-</div>
 </div>

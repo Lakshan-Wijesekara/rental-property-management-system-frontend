@@ -4,7 +4,8 @@
         "value": "wp",
         "items": [
              { "label": "Colombo", "value": "Colombo" },
-             { "label": "Gampaha", "value": "Gampaha" }
+             { "label": "Kadawatha", "value": "Kadawatha"},
+             { "label": "Gampaha", "value": "Gampaha" } 
             ]
     },
     
