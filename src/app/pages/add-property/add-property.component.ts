@@ -27,16 +27,17 @@ export class AddPropertyComponent implements OnInit {
   groupedCities: City[] = [];
   inputValue: string | undefined;
   isAddPropertyVisible: boolean = false;
-  dropdownSelectedCity: string = '';
+  dropdownSelectedCity: string | undefined;
   //Get the input from the property search box
   searchText: string = '';
   selectedPropertyLocation!: Marker | undefined;
   selectedProperty!: Property | undefined;
-  propertyVisibility = propertyState;
+  _propertyVisibility = propertyState;
   propertyShowState: propertyState = propertyState.AddProperty;
   id: number = 0;
   //Reactive form (selectedProperty is not defined since it is a stand-alone component)
   reactiveForm: FormGroup = new FormGroup({
+    selectedCity: new FormControl(''),
     propertyName: new FormControl('', [Validators.required]),
     propertyArea: new FormControl('', [
       Validators.pattern('^[0-9]*$'),
@@ -94,7 +95,7 @@ export class AddPropertyComponent implements OnInit {
 
   //Show the pop-up
   showDialog(): void {
-    this.propertyShowState = this.propertyVisibility.AddProperty;
+    this.propertyShowState = this._propertyVisibility.AddProperty;
     this.isAddPropertyVisible = true;
   }
 
@@ -102,7 +103,7 @@ export class AddPropertyComponent implements OnInit {
   updateProperty(propertyform: FormGroupDirective, id: number): void {
     const updatedProperty = {
       id: id,
-      selectedCity: this.dropdownSelectedCity!,
+      selectedCity: propertyform.value.selectedCity,
       propertyName: propertyform.value.propertyName,
       propertyArea: propertyform.value.propertyArea,
       monthlyRental: propertyform.value.monthlyRental,
@@ -112,7 +113,7 @@ export class AddPropertyComponent implements OnInit {
 
   //View property will assign the values according to changes in the DOM
   viewDialog(property: Property) {
-    this.propertyShowState = this.propertyVisibility.UpdateProperty;
+    this.propertyShowState = this._propertyVisibility.UpdateProperty;
     this.selectedProperty = property;
     this.isAddPropertyVisible = true;
     this.id = property.id;
@@ -145,8 +146,8 @@ export class AddPropertyComponent implements OnInit {
   }
 
   //The dropdownSelectedCity is passed to this method from the html and used to find the specific location
-  getPropertyLocation(dropdownSelectedCity: string) {
-    this.markerService.getMarkerLocation(dropdownSelectedCity).subscribe({
+  getPropertyLocation(dropdownSelectedCity: string | undefined) {
+    this.markerService.getMarkerLocation(dropdownSelectedCity!).subscribe({
       next: (marker) => {
         this.selectedPropertyLocation = marker!; //If correct
       },
@@ -162,9 +163,10 @@ export class AddPropertyComponent implements OnInit {
 
   //Add property to the signal
   addProperty(propertyform: FormGroupDirective): void {
+    this.propertyShowState = this._propertyVisibility.AddProperty;
     const newProperty = {
       id: this.propertyDataService.properties().length + 1,
-      selectedCity: this.dropdownSelectedCity!,
+      selectedCity: this.dropdownSelectedCity,
       propertyName: propertyform.value.propertyName,
       propertyArea: propertyform.value.propertyArea,
       monthlyRental: propertyform.value.monthlyRental,
@@ -190,10 +192,10 @@ export class AddPropertyComponent implements OnInit {
   }
 
   onSubmit(propertyform: FormGroupDirective, id: number) {
-    if (this.propertyShowState == this.propertyVisibility.AddProperty) {
+    if (this.propertyShowState == this._propertyVisibility.AddProperty) {
       this.addProperty(propertyform);
     } else if (
-      this.propertyShowState == this.propertyVisibility.UpdateProperty
+      this.propertyShowState == this._propertyVisibility.UpdateProperty
     ) {
       this.updateProperty(propertyform, id);
     }
