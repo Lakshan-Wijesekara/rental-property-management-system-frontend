@@ -30,14 +30,13 @@ export class AddPropertyComponent implements OnInit {
   dropdownSelectedCity: string | undefined;
   //Get the input from the property search box
   searchText: string = '';
-  selectedPropertyLocation!: Marker | undefined;
+  defaultMarkerLocation!: Marker | undefined;
   selectedProperty!: Property | undefined;
-  _propertyVisibility = propertyState;
+  propertyVisibility = propertyState;
   propertyShowState: propertyState = propertyState.AddProperty;
   id: number = 0;
   //Reactive form (selectedProperty is not defined since it is a stand-alone component)
   reactiveForm: FormGroup = new FormGroup({
-    selectedCity: new FormControl(''),
     propertyName: new FormControl('', [Validators.required]),
     propertyArea: new FormControl('', [
       Validators.pattern('^[0-9]*$'),
@@ -48,14 +47,6 @@ export class AddPropertyComponent implements OnInit {
       Validators.required,
     ]),
   });
-
-  get selectedCity() {
-    return this.reactiveForm.get('selectedCity');
-  }
-
-  set selectedCity(value: any) {
-    this.reactiveForm.get('selectedCity')?.setValue(value);
-  }
 
   get propertyName() {
     return this.reactiveForm.get('propertyName');
@@ -95,7 +86,7 @@ export class AddPropertyComponent implements OnInit {
 
   //Show the pop-up
   showDialog(): void {
-    this.propertyShowState = this._propertyVisibility.AddProperty;
+    this.propertyShowState = this.propertyVisibility.AddProperty;
     this.isAddPropertyVisible = true;
   }
 
@@ -103,7 +94,7 @@ export class AddPropertyComponent implements OnInit {
   updateProperty(propertyform: FormGroupDirective, id: number): void {
     const updatedProperty = {
       id: id,
-      selectedCity: propertyform.value.selectedCity,
+      selectedCity: this.dropdownSelectedCity!,
       propertyName: propertyform.value.propertyName,
       propertyArea: propertyform.value.propertyArea,
       monthlyRental: propertyform.value.monthlyRental,
@@ -113,11 +104,11 @@ export class AddPropertyComponent implements OnInit {
 
   //View property will assign the values according to changes in the DOM
   viewDialog(property: Property) {
-    this.propertyShowState = this._propertyVisibility.UpdateProperty;
+    this.propertyShowState = this.propertyVisibility.UpdateProperty;
     this.selectedProperty = property;
     this.isAddPropertyVisible = true;
     this.id = property.id;
-    this.selectedCity = property.selectedCity;
+    this.dropdownSelectedCity = property.selectedCity;
     this.propertyName = property.propertyName;
     this.propertyArea = property.propertyArea;
     this.monthlyRental = property.monthlyRental;
@@ -149,7 +140,7 @@ export class AddPropertyComponent implements OnInit {
   getPropertyLocation(dropdownSelectedCity: string | undefined) {
     this.markerService.getMarkerLocation(dropdownSelectedCity!).subscribe({
       next: (marker) => {
-        this.selectedPropertyLocation = marker!; //If correct
+        this.defaultMarkerLocation = marker!; //If correct default marker location
       },
       error: (error) => {
         this.messageService.add({
@@ -163,15 +154,15 @@ export class AddPropertyComponent implements OnInit {
 
   //Add property to the signal
   addProperty(propertyform: FormGroupDirective): void {
-    this.propertyShowState = this._propertyVisibility.AddProperty;
+    this.propertyShowState = this.propertyVisibility.AddProperty;
     const newProperty = {
       id: this.propertyDataService.properties().length + 1,
-      selectedCity: this.dropdownSelectedCity,
+      selectedCity: this.dropdownSelectedCity!,
       propertyName: propertyform.value.propertyName,
       propertyArea: propertyform.value.propertyArea,
       monthlyRental: propertyform.value.monthlyRental,
-      latitude: this.selectedPropertyLocation?.lat,
-      longtitude: this.selectedPropertyLocation?.lng,
+      latitude: this.defaultMarkerLocation?.lat,
+      longtitude: this.defaultMarkerLocation?.lng,
     };
 
     const response = this.propertyDataService.addProperty(newProperty);
@@ -192,10 +183,10 @@ export class AddPropertyComponent implements OnInit {
   }
 
   onSubmit(propertyform: FormGroupDirective, id: number) {
-    if (this.propertyShowState == this._propertyVisibility.AddProperty) {
+    if (this.propertyShowState == this.propertyVisibility.AddProperty) {
       this.addProperty(propertyform);
     } else if (
-      this.propertyShowState == this._propertyVisibility.UpdateProperty
+      this.propertyShowState == this.propertyVisibility.UpdateProperty
     ) {
       this.updateProperty(propertyform, id);
     }

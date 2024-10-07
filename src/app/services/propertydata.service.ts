@@ -38,10 +38,9 @@ export class PropertydataService {
   }
 
   updateProperty(updatedProperty: Property) {
-    this.properties().find((element, index) => {
-      if (element.id == updatedProperty.id) {
-        this.properties().splice(index, 1, updatedProperty);
-      }
-    });
+    let index = this.properties().findIndex(
+      (element) => element.id == updatedProperty.id
+    );
+    this.properties().splice(index, 1, updatedProperty);
   }
 }
