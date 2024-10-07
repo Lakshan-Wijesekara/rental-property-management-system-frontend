@@ -38,7 +38,7 @@ export class PropertydataService {
   }
 
   updateProperty(updatedProperty: Property) {
-    this.properties().forEach((element, index) => {
+    this.properties().find((element, index) => {
       if (element.id == updatedProperty.id) {
         this.properties().splice(index, 1, updatedProperty);
       }
