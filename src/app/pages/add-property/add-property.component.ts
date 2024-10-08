@@ -156,10 +156,6 @@ export class AddPropertyComponent implements OnInit {
             p.propertyName?.toLowerCase().includes(searchText.toLowerCase()) ||
             p.propertyArea?.toString().includes(searchText) ||
             p.monthlyRental?.toString().includes(searchText)
-            p.selectedCity?.toLowerCase().includes(searchText.toLowerCase()) ||
-            p.propertyName?.toLowerCase().includes(searchText.toLowerCase()) ||
-            p.propertyArea?.toString().includes(searchText) ||
-            p.monthlyRental?.toString().includes(searchText)
         );
       return property;
     }
@@ -188,15 +184,12 @@ export class AddPropertyComponent implements OnInit {
     const newProperty = {
       id: this.propertyDataService.properties().length + 1,
       selectedCity: this.dropdownSelectedCity!,
-      id: this.propertyDataService.properties().length + 1,
-      selectedCity: this.dropdownSelectedCity!,
       propertyName: propertyform.value.propertyName,
       propertyArea: propertyform.value.propertyArea,
       monthlyRental: propertyform.value.monthlyRental,
       latitude: this.selectedLocation?.lat,
       longtitude: this.selectedLocation?.lng,
     };
-
 
     const response = this.propertyDataService.addProperty(newProperty);
     if (response.status === 'success') {
@@ -232,13 +225,6 @@ export class AddPropertyComponent implements OnInit {
   private fetchProperties(): void {
     this.propertyDataService.fetchData().subscribe((propertyJSON) => {
       this.propertyDataService.properties.set(propertyJSON);
-    });
-  }
-
-  //Get cities from the cities JSON file
-  private getCities(): void {
-    this.cityDataService.fetchCityData().subscribe((groupedCities) => {
-      this.groupedCities = groupedCities;
     });
   }
 
