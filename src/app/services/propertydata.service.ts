@@ -36,4 +36,11 @@ export class PropertydataService {
       return successResponse;
     }
   }
+
+  updateProperty(updatedProperty: Property) {
+    let index = this.properties().findIndex(
+      (element) => element.id == updatedProperty.id
+    );
+    this.properties().splice(index, 1, updatedProperty);
+  }
 }

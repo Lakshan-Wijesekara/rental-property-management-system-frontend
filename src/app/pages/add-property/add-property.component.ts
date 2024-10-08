@@ -12,6 +12,12 @@ import { Property } from '../../interfaces/property';
 import { MessageService } from 'primeng/api';
 import { MarkerService } from '../../services/marker.service';
 import { Marker } from '../../interfaces/marker';
+
+//enum was used here to track the state of add property and update property
+enum propertyState {
+  AddProperty = 'addProperty',
+  UpdateProperty = 'updateProperty',
+}
 @Component({
   selector: 'app-properties',
   templateUrl: './add-property.component.html',
@@ -21,13 +27,17 @@ export class AddPropertyComponent implements OnInit {
   groupedCities: City[] = [];
   inputValue: string | undefined;
   isAddPropertyVisible: boolean = false;
-  isViewPropertyVisible: boolean = false;
-  dropdownSelectedCity: string = '';
+  dropdownSelectedCity: string | undefined;
   //Get the input from the property search box
   searchText: string = '';
-  selectedPropertyLocation!: Marker | undefined;
+  selectedLocation!: Marker | undefined;
   selectedProperty!: Property | undefined;
-
+  propertyVisibility = propertyState;
+  propertyShowState: propertyState = propertyState.AddProperty;
+  id: number = 0;
+  defaultLatitude: number = 6.9271;
+  defaultLongtitude: number = 79.8612;
+  //Reactive form (selectedProperty is not defined since it is a stand-alone component)
   reactiveForm: FormGroup = new FormGroup({
     propertyName: new FormControl('', [Validators.required]),
     propertyArea: new FormControl('', [
@@ -39,6 +49,30 @@ export class AddPropertyComponent implements OnInit {
       Validators.required,
     ]),
   });
+
+  get propertyName() {
+    return this.reactiveForm.get('propertyName');
+  }
+
+  set propertyName(value: any) {
+    this.reactiveForm.get('propertyName')?.setValue(value);
+  }
+
+  get propertyArea() {
+    return this.reactiveForm.get('propertyArea');
+  }
+
+  set propertyArea(value: any) {
+    this.reactiveForm.get('propertyArea')?.setValue(value);
+  }
+
+  get monthlyRental() {
+    return this.reactiveForm.get('monthlyRental');
+  }
+
+  set monthlyRental(value: any) {
+    this.reactiveForm.get('monthlyRental')?.setValue(value);
+  }
 
   constructor(
     private cityDataService: CitydataService,
@@ -54,19 +88,61 @@ export class AddPropertyComponent implements OnInit {
 
   //Show the pop-up
   showDialog(): void {
+    this.propertyShowState = this.propertyVisibility.AddProperty;
     this.isAddPropertyVisible = true;
+  }
+
+  selectedLatitude(): number {
+    let lat = this.selectedLocation?.lat || this.defaultLatitude;
+    return lat;
+  }
+
+  selectedLongtitude(): number {
+    let lng = this.selectedLocation?.lng || this.defaultLongtitude;
+    return lng;
+  }
+
+  selectedPropertyLatitude(): number {
+    this.propertyShowState = this.propertyVisibility.UpdateProperty;
+    let latitude =
+      this.selectedProperty?.latitude || this.selectedLocation!.lat || 0;
+    return latitude;
+  }
+
+  selectedPropertyLongtitude(): number {
+    this.propertyShowState = this.propertyVisibility.UpdateProperty;
+    let longtitude =
+      this.selectedProperty?.longtitude || this.selectedLocation?.lng || 0;
+    return longtitude;
+  }
+
+  //To update the property with a new value
+  updateProperty(propertyform: FormGroupDirective, id: number): void {
+    const updatedProperty = {
+      id: id,
+      selectedCity: this.dropdownSelectedCity!,
+      propertyName: propertyform.value.propertyName,
+      propertyArea: propertyform.value.propertyArea,
+      monthlyRental: propertyform.value.monthlyRental,
+    };
+    return this.propertyDataService.updateProperty(updatedProperty);
+  }
+
+  //View property will assign the values according to changes in the DOM
+  viewDialog(property: Property) {
+    this.propertyShowState = this.propertyVisibility.UpdateProperty;
+    this.selectedProperty = property;
+    this.isAddPropertyVisible = true;
+    this.id = property.id;
+    this.dropdownSelectedCity = property.selectedCity;
+    this.propertyName = property.propertyName;
+    this.propertyArea = property.propertyArea;
+    this.monthlyRental = property.monthlyRental;
   }
 
   //Close the pop-up
   closeDialog(): void {
     this.isAddPropertyVisible = false;
-    this.isViewPropertyVisible = false;
-  }
-
-  //Passing the property input parameter is a must, to correctly show the updated property in the pop-up map
-  viewProperty(property: Property) {
-    this.isViewPropertyVisible = true;
-    this.selectedProperty = property;
   }
 
   //When calling the property list, if there's a value in propertySearch box the filter runs
@@ -87,10 +163,10 @@ export class AddPropertyComponent implements OnInit {
   }
 
   //The dropdownSelectedCity is passed to this method from the html and used to find the specific location
-  getPropertyLocation(dropdownSelectedCity: string) {
-    this.markerService.getMarkerLocation(dropdownSelectedCity).subscribe({
+  getPropertyLocation(dropdownSelectedCity: string | undefined) {
+    this.markerService.getMarkerLocation(dropdownSelectedCity!).subscribe({
       next: (marker) => {
-        this.selectedPropertyLocation = marker!; //If correct
+        this.selectedLocation = marker!; //If correct default marker location
       },
       error: (error) => {
         this.messageService.add({
@@ -104,14 +180,15 @@ export class AddPropertyComponent implements OnInit {
 
   //Add property to the signal
   addProperty(propertyform: FormGroupDirective): void {
+    this.propertyShowState = this.propertyVisibility.AddProperty;
     const newProperty = {
       id: this.propertyDataService.properties().length + 1,
       selectedCity: this.dropdownSelectedCity!,
       propertyName: propertyform.value.propertyName,
       propertyArea: propertyform.value.propertyArea,
       monthlyRental: propertyform.value.monthlyRental,
-      latitude: this.selectedPropertyLocation?.lat,
-      longtitude: this.selectedPropertyLocation?.lng,
+      latitude: this.selectedLocation?.lat,
+      longtitude: this.selectedLocation?.lng,
     };
 
     const response = this.propertyDataService.addProperty(newProperty);
@@ -128,6 +205,16 @@ export class AddPropertyComponent implements OnInit {
         summary: 'Error',
         detail: 'Error occurred',
       });
+    }
+  }
+
+  onSubmit(propertyform: FormGroupDirective, id: number) {
+    if (this.propertyShowState == this.propertyVisibility.AddProperty) {
+      this.addProperty(propertyform);
+    } else if (
+      this.propertyShowState == this.propertyVisibility.UpdateProperty
+    ) {
+      this.updateProperty(propertyform, id);
     }
   }
 

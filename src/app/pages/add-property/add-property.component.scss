@@ -81,6 +81,7 @@ html,body {
 .map-view{
     height: 300px;
     width: 300px;
+    display: flex;
 }
 
 .add-property-form{
@@ -90,3 +91,12 @@ html,body {
 .column{
     flex: 50%;
 }
+
+.parent-form{
+    display:flex;
+}
+
+.floatLabel{
+    margin-left: 20px;
+}
+
