@@ -1,8 +1,9 @@
-<div class="parent-container">
-    <div class="row"></div>
-</div>
+<div class="searchbox-container">
     <input pInputText type="text" (input)="getUsers(searchText)" [(ngModel)]="searchText" placeholder="Search user" />
-    <div class="row"></div>
+</div>
+<div class="button-container">
+    <p-button (onClick)="showDialog()" label="Add User" />
+</div>
 <div class="card">
     <p-table
     [value]="getUsers(searchText)" 
@@ -27,63 +28,55 @@
             <td>{{user.email}}</td>
             <td>{{user.telephonenumber}}</td>
             <td >  
-                <p-button  (onClick)="viewUserForm(user)" label="Update User" />
+                <p-button  (onClick)="viewUserForm(user)" label="View User" />
                </td>
         </ng-template>
     </p-table>
 </div>
     <div class="row"></div>
-<p-button (onClick)="showDialog()" label="Add-User" />
 <div class = "user-pop-up-form">
     <p-dialog [header]="currentPropertyProcess == _propertyVisibility.AddProperty ? 'Add User' : 'Update User'" [modal]="true" [(visible)]="isAddUserFormvisible" [contentStyle]="{'dialog-box':null}">
         <form class = "add-user-form" #userForm="ngForm" (ngSubmit)="onSubmit()">
             <div class = "container">
-                <div class="row"></div>
-                    <p-floatLabel>
-                        <input class="first-name-box" pInputText id="firstname" name="firstname" [(ngModel)]="firstname" required>
+                <p-floatLabel>
+                    <input class="first-name-box" pInputText id="firstname" name="firstname" [(ngModel)]="firstname" required>
                         <div class="error-message" *ngIf="!userForm.submitted  && !userForm.controls['firstname']?.valid && userForm.controls['firstname']?.touched">
-                        *Name is required.
+                            *Name is required.
                         </div>
-                        <label class="text-label">First Name</label>
-                    </p-floatLabel>
-                <div class="row"></div>
-                    <p-floatLabel>
-                        <input class="lastname-box" pInputText id="lastname" name="lastname" [(ngModel)]="lastname" required> 
+                    <label class="text-label">First Name</label>
+                </p-floatLabel>
+                <p-floatLabel>
+                    <input class="lastname-box" pInputText id="lastname" name="lastname" [(ngModel)]="lastname" required> 
                         <div class="error-message" *ngIf="!userForm.submitted && !userForm.controls['lastname']?.valid && userForm.controls['lastname']?.touched">
                             *Surname is required.
                         </div>
-                        <label class="text-label"> Surname </label>
-                    </p-floatLabel>
-                <div class="row"></div>
-                    <p-floatLabel>
-                        <input class="property-name-box" pInputText id="propertyname" name="propertyname"  [(ngModel)]="propertyname" required>
+                    <label class="text-label"> Surname </label>
+                </p-floatLabel>
+                <p-floatLabel>
+                    <input class="property-name-box" pInputText id="propertyname" name="propertyname"  [(ngModel)]="propertyname" required>
                         <div class="error-message" *ngIf="!userForm.submitted && !userForm.controls['propertyname']?.valid && userForm.controls['propertyname']?.touched">
                             *Property Name is required.
                         </div>
-                        <label class="text-label"> Property Name </label> 
-                    </p-floatLabel>
-                <div class="row"></div>
-                    <p-floatLabel>
-                        <input class="user-email-box" pInputText id="email" type="email" name="email"  [(ngModel)]="email" required email="true" >
+                    <label class="text-label"> Property Name </label> 
+                </p-floatLabel>
+                <p-floatLabel>
+                    <input class="user-email-box" pInputText id="email" type="email" name="email"  [(ngModel)]="email" required email="true" >
                         <div class="error-message" *ngIf="!userForm.submitted && !userForm.controls['email']?.valid && userForm.controls['email']?.touched">
                             *Email is required.
                         </div>
-                        <label class="text-label"> Email </label> 
-                    </p-floatLabel>
-                <div class="row"></div>
-                    <p-floatLabel>
-                        <input class="tp-number-box" pInputText id="telephonenumber" name="telephonenumber"  [(ngModel)]="telephonenumber" required #telephoneNumber="ngModel" tpValidator maxlength="10">
+                    <label class="text-label"> Email </label> 
+                </p-floatLabel>
+                <p-floatLabel>
+                    <input class="tp-number-box" pInputText id="telephonenumber" name="telephonenumber"  [(ngModel)]="telephonenumber" required #telephoneNumber="ngModel" tpValidator maxlength="10">
                         <div class="error-message" *ngIf="!userForm.submitted && !userForm.controls['telephonenumber']?.valid && userForm.controls['telephonenumber']?.touched">
                             *A 10-digit mobile number is required.
                         </div>
-                        <label class="text-label"> Mobile Number </label> 
-                    </p-floatLabel>
-                <div class="row1"></div>
-                    <div class="button-container">
-                        <p-button class="add-btn" (onClick)="closeDialog()" [disabled]="!userForm.valid" type="submit" [raised]="true" [rounded]="true" [label]="currentPropertyProcess==_propertyVisibility.AddProperty? 'Add User': 'Update User'" severity="warning"/>
-                    </div>  
+                    <label class="text-label"> Mobile Number </label> 
+                </p-floatLabel>
+                <div class="button-container">
+                    <p-button class="add-btn" (onClick)="closeDialog()" [disabled]="!userForm.valid" type="submit" [raised]="true" [rounded]="true" [label]="currentPropertyProcess==_propertyVisibility.AddProperty? 'Add User': 'Update User'" severity="warning"/>
+                </div>  
             </div>
         </form>
     </p-dialog>
-</div>
 </div>
