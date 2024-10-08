@@ -30,11 +30,13 @@ export class AddPropertyComponent implements OnInit {
   dropdownSelectedCity: string | undefined;
   //Get the input from the property search box
   searchText: string = '';
-  defaultMarkerLocation!: Marker | undefined;
+  selectedLocation!: Marker | undefined;
   selectedProperty!: Property | undefined;
   propertyVisibility = propertyState;
   propertyShowState: propertyState = propertyState.AddProperty;
   id: number = 0;
+  defaultLatitude: number = 6.9271;
+  defaultLongtitude: number = 79.8612;
   //Reactive form (selectedProperty is not defined since it is a stand-alone component)
   reactiveForm: FormGroup = new FormGroup({
     propertyName: new FormControl('', [Validators.required]),
@@ -90,6 +92,30 @@ export class AddPropertyComponent implements OnInit {
     this.isAddPropertyVisible = true;
   }
 
+  selectedLatitude(): number {
+    let lat = this.selectedLocation?.lat || this.defaultLatitude;
+    return lat;
+  }
+
+  selectedLongtitude(): number {
+    let lng = this.selectedLocation?.lng || this.defaultLongtitude;
+    return lng;
+  }
+
+  selectedPropertyLatitude(): number {
+    this.propertyShowState = this.propertyVisibility.UpdateProperty;
+    let latitude =
+      this.selectedProperty?.latitude || this.selectedLocation!.lat || 0;
+    return latitude;
+  }
+
+  selectedPropertyLongtitude(): number {
+    this.propertyShowState = this.propertyVisibility.UpdateProperty;
+    let longtitude =
+      this.selectedProperty?.longtitude || this.selectedLocation?.lng || 0;
+    return longtitude;
+  }
+
   //To update the property with a new value
   updateProperty(propertyform: FormGroupDirective, id: number): void {
     const updatedProperty = {
@@ -140,7 +166,7 @@ export class AddPropertyComponent implements OnInit {
   getPropertyLocation(dropdownSelectedCity: string | undefined) {
     this.markerService.getMarkerLocation(dropdownSelectedCity!).subscribe({
       next: (marker) => {
-        this.defaultMarkerLocation = marker!; //If correct default marker location
+        this.selectedLocation = marker!; //If correct default marker location
       },
       error: (error) => {
         this.messageService.add({
@@ -161,8 +187,8 @@ export class AddPropertyComponent implements OnInit {
       propertyName: propertyform.value.propertyName,
       propertyArea: propertyform.value.propertyArea,
       monthlyRental: propertyform.value.monthlyRental,
-      latitude: this.defaultMarkerLocation?.lat,
-      longtitude: this.defaultMarkerLocation?.lng,
+      latitude: this.selectedLocation?.lat,
+      longtitude: this.selectedLocation?.lng,
     };
 
     const response = this.propertyDataService.addProperty(newProperty);

@@ -55,10 +55,10 @@
                                 </p-dropdown>
                             <div class="row"></div>
                             <div class="map-view" *ngIf="propertyShowState==propertyVisibility.AddProperty">
-                                <app-map [lat]="this.defaultMarkerLocation?.lat || 6.9271" [lng]="this.defaultMarkerLocation?.lng || 79.8612"></app-map>
+                                <app-map [lat]="selectedLatitude()" [lng]="selectedLongtitude()"></app-map>
                             </div>
                             <div class="map-view" *ngIf="propertyShowState==propertyVisibility.UpdateProperty">
-                                <app-map [lat]="this.selectedProperty?.latitude || this.defaultMarkerLocation?.lat||0" [lng]="this.selectedProperty?.longtitude ||this.defaultMarkerLocation?.lng || 0" ></app-map>
+                                <app-map [lat]="selectedPropertyLatitude()" [lng]="selectedPropertyLongtitude()" ></app-map>
                             </div>
                         </div>
                         <div class="column">
