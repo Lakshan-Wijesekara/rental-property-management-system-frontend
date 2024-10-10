@@ -32,7 +32,7 @@
         </ng-template>
     </p-table>
     <div class = "pop-up-form">
-        <p-dialog [header]='propertyShowState==propertyVisibility.AddProperty? "Add Property": "Update Property"' [modal]="true" [(visible)]="isAddPropertyVisible">
+        <p-dialog [header]='propertyShowState==propertyVisibility.AddProperty? "Add Property": "Update Property"' (onHide)="closeDialog()" [modal]="true" [(visible)]="isAddPropertyVisible">
             <form class = "add-property-form" #propertyForm="ngForm" [formGroup] = "reactiveForm" (ngSubmit)="onSubmit(propertyForm , id)">
                 <div class = "parent-form">
                         <div class = "column">
@@ -75,7 +75,7 @@
                                 <label class="floatLabel"> Monthly Rental </label> 
                             </p-floatLabel>
                             <div class="button-container">
-                                <p-button class="submit-btn" (onClick)="closeDialog()" [disabled]="!propertyForm.valid" type="submit" [raised]="true" [label]="propertyShowState==propertyVisibility.AddProperty? 'Add':'Update'" severity="warning"  />
+                                <p-button class="submit-btn" [disabled]="!propertyForm.valid" type="submit" [raised]="true" [label]="propertyShowState==propertyVisibility.AddProperty? 'Add':'Update'" severity="warning"  />
                         </div>
                     </div>
                 </div>

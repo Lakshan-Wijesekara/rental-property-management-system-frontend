@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { Property } from '../interfaces/property';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { DataResponse } from '../interfaces/data-response';
 
 @Injectable({
@@ -28,19 +28,34 @@ export class PropertydataService {
       };
       return successResponse;
     } catch (error) {
-      const successResponse = {
+      const Response = {
         status: 'unsuccessful',
         message: 'Error occurred',
         data: property,
       };
-      return successResponse;
+      return Response;
     }
   }
 
   updateProperty(updatedProperty: Property) {
-    let index = this.properties().findIndex(
-      (element) => element.id == updatedProperty.id
-    );
-    this.properties().splice(index, 1, updatedProperty);
+    try {
+      let index = this.properties().findIndex(
+        (element) => element.id == updatedProperty.id
+      );
+      this.properties().splice(index, 1, updatedProperty);
+      const successResponse = {
+        status: 'success',
+        message: 'Property added',
+        data: updatedProperty,
+      };
+      return successResponse;
+    } catch (error) {
+      const Response = {
+        status: 'unsuccessful',
+        message: 'Error occurred',
+        data: updatedProperty,
+      };
+      return Response;
+    }
   }
 }

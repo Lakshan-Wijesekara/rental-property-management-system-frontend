@@ -4,8 +4,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { authGuard } from './guards/auth.guard';
 import { appGuard } from './guards/app.guard';
-import { AddPropertyComponent } from './pages/add-property/add-property.component';
-import { AddUserComponent } from './pages/add-user/add-user.component';
+import { AddPropertyComponent } from './pages/property/add-property.component';
+import { AddUserComponent } from './pages/user/add-user.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },

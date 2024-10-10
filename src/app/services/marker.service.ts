@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, of } from 'rxjs';
 import { Marker } from '../interfaces/marker';
+import { Property } from '../interfaces/property';
 
 @Injectable({
   providedIn: 'root',

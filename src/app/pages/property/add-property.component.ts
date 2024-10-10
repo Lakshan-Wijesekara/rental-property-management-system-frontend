@@ -31,7 +31,7 @@ export class AddPropertyComponent implements OnInit {
   //Get the input from the property search box
   searchText: string = '';
   selectedLocation!: Marker | undefined;
-  selectedProperty!: Property | undefined;
+  selectedProperty!: Property;
   propertyVisibility = propertyState;
   propertyShowState: propertyState = propertyState.AddProperty;
   id: number = 0;
@@ -93,27 +93,19 @@ export class AddPropertyComponent implements OnInit {
   }
 
   selectedLatitude(): number {
-    let lat = this.selectedLocation?.lat || this.defaultLatitude;
-    return lat;
+    return this.selectedLocation?.lat || this.defaultLatitude;
   }
 
   selectedLongtitude(): number {
-    let lng = this.selectedLocation?.lng || this.defaultLongtitude;
-    return lng;
+    return this.selectedLocation?.lng || this.defaultLongtitude;
   }
 
   selectedPropertyLatitude(): number {
-    this.propertyShowState = this.propertyVisibility.UpdateProperty;
-    let latitude =
-      this.selectedProperty?.latitude || this.selectedLocation!.lat || 0;
-    return latitude;
+    return this.selectedProperty?.latitude!;
   }
 
   selectedPropertyLongtitude(): number {
-    this.propertyShowState = this.propertyVisibility.UpdateProperty;
-    let longtitude =
-      this.selectedProperty?.longtitude || this.selectedLocation?.lng || 0;
-    return longtitude;
+    return this.selectedProperty?.longtitude!;
   }
 
   //To update the property with a new value
@@ -124,25 +116,41 @@ export class AddPropertyComponent implements OnInit {
       propertyName: propertyform.value.propertyName,
       propertyArea: propertyform.value.propertyArea,
       monthlyRental: propertyform.value.monthlyRental,
+      latitude: this.selectedProperty?.latitude,
+      longtitude: this.selectedProperty?.longtitude,
     };
-    return this.propertyDataService.updateProperty(updatedProperty);
+    this.propertyDataService.updateProperty(updatedProperty);
+    this.closeDialog();
   }
 
   //View property will assign the values according to changes in the DOM
-  viewDialog(property: Property) {
+  viewDialog(property: Property): void {
     this.propertyShowState = this.propertyVisibility.UpdateProperty;
     this.selectedProperty = property;
+    this.fillFormData();
     this.isAddPropertyVisible = true;
-    this.id = property.id;
-    this.dropdownSelectedCity = property.selectedCity;
-    this.propertyName = property.propertyName;
-    this.propertyArea = property.propertyArea;
-    this.monthlyRental = property.monthlyRental;
+  }
+
+  fillFormData(): void {
+    this.id = this.selectedProperty.id || 0;
+    this.dropdownSelectedCity = this.selectedProperty.selectedCity;
+    this.propertyName = this.selectedProperty.propertyName;
+    this.propertyArea = this.selectedProperty.propertyArea;
+    this.monthlyRental = this.selectedProperty.monthlyRental;
+  }
+
+  clearFormData(): void {
+    this.id = 0;
+    this.dropdownSelectedCity = '';
+    this.propertyName = '';
+    this.propertyArea = '';
+    this.monthlyRental = '';
   }
 
   //Close the pop-up
   closeDialog(): void {
     this.isAddPropertyVisible = false;
+    this.clearFormData();
   }
 
   //When calling the property list, if there's a value in propertySearch box the filter runs
@@ -163,10 +171,15 @@ export class AddPropertyComponent implements OnInit {
   }
 
   //The dropdownSelectedCity is passed to this method from the html and used to find the specific location
-  getPropertyLocation(dropdownSelectedCity: string | undefined) {
+  getPropertyLocation(dropdownSelectedCity: string | undefined): void {
     this.markerService.getMarkerLocation(dropdownSelectedCity!).subscribe({
       next: (marker) => {
-        this.selectedLocation = marker!; //If correct default marker location
+        if (this.propertyShowState == this.propertyVisibility.AddProperty) {
+          this.selectedLocation = marker!;
+        } else {
+          this.selectedProperty.longtitude = marker?.lng;
+          this.selectedProperty.latitude = marker?.lat;
+        }
       },
       error: (error) => {
         this.messageService.add({
@@ -177,7 +190,6 @@ export class AddPropertyComponent implements OnInit {
       },
     });
   }
-
   //Add property to the signal
   addProperty(propertyform: FormGroupDirective): void {
     this.propertyShowState = this.propertyVisibility.AddProperty;
@@ -208,7 +220,7 @@ export class AddPropertyComponent implements OnInit {
     }
   }
 
-  onSubmit(propertyform: FormGroupDirective, id: number) {
+  onSubmit(propertyform: FormGroupDirective, id: number): void {
     if (this.propertyShowState == this.propertyVisibility.AddProperty) {
       this.addProperty(propertyform);
     } else if (
