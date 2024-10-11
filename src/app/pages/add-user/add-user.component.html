@@ -1,8 +1,10 @@
-<div class="searchbox-container">
-    <input pInputText type="text" (input)="getUsers(searchText)" [(ngModel)]="searchText" placeholder="Search user" />
-</div>
-<div class="button-container">
-    <p-button (onClick)="showDialog()" label="Add User" />
+<div class="parent-container">
+    <div class="add-button">
+        <p-button (onClick)="showDialog()" label="Add User" />
+    </div>
+    <div class="searchbox-container">
+        <input pInputText type="text" (input)="getUsers(searchText)" [(ngModel)]="searchText" placeholder="Search user" />
+    </div>
 </div>
 <div class="card">
     <p-table
