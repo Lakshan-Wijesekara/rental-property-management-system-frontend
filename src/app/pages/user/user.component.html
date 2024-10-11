@@ -1,0 +1,39 @@
+<div class="parent-container">
+    <div class="add-button">
+        <p-button (onClick)="triggerShowDialog()" label="Add User" />
+    </div>
+    <div class="searchbox-container">
+        <input pInputText type="text" (input)="getUsers(searchText)" [(ngModel)]="searchText" placeholder="Search user" />
+    </div>
+</div>
+<div class="card">
+    <p-table
+    [value]="getUsers(searchText)" 
+    [rows]="10"
+    [paginator]="true"
+    [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Property Name</th>
+            <th>Email Address</th>
+            <th>Telephone Number</th>
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+        <tr>
+            <td>{{user.firstname}}</td>
+            <td>{{user.lastname}}</td>
+            <td>{{user.propertyname}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.telephonenumber}}</td>
+            <td >  
+                <p-button (onClick)="triggerViewUserForm(user)" label="View User" />
+               </td>
+        </ng-template>
+    </p-table>
+</div>
+<div class="row"></div>
+<app-user-feature #userFeature></app-user-feature>

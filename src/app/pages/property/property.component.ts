@@ -14,21 +14,20 @@ export class PropertyComponent implements OnInit {
   //Get the input from the property search box
   searchText: string = '';
   @ViewChild('addProperty') addProperty: PropertyFeatureComponent | undefined;
-
-  triggerViewMethod(property: Property) {
-    this.addProperty?.viewDialog(property);
-  }
-
-  triggerDialog() {
-    this.addProperty?.showDialog();
-  }
-
   constructor(
     private propertyDataService: PropertydataService // private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
     this.fetchProperties();
+  }
+
+  triggerViewMethod(property: Property): void {
+    this.addProperty?.viewDialog(property);
+  }
+
+  triggerDialog(): void {
+    this.addProperty?.showDialog();
   }
 
   //When calling the property list, if there's a value in propertySearch box the filter runs
@@ -49,7 +48,6 @@ export class PropertyComponent implements OnInit {
   }
 
   //PRIVATE
-
   //Get properties from the properties JSON file
   private fetchProperties(): void {
     this.propertyDataService.fetchData().subscribe((propertyJSON) => {
