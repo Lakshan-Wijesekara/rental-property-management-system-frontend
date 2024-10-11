@@ -221,7 +221,6 @@ export class AddPropertyComponent implements OnInit {
   //PRIVATE
 
   //Get properties from the properties JSON file
-  //Get properties from the properties JSON file
   private fetchProperties(): void {
     this.propertyDataService.fetchData().subscribe((propertyJSON) => {
       this.propertyDataService.properties.set(propertyJSON);
