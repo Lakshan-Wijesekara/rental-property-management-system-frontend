@@ -1,0 +1,35 @@
+<div class="parent-container">
+    <p-button (onClick)="triggerDialog()" label="Add Property" />
+    <input class="search" pInputText type="text" (keyup)="getProperties(searchText)" [(ngModel)]="searchText" placeholder="Search property">
+</div>
+<div class="card">
+    <p-table 
+        [value]="getProperties(searchText)" 
+        [tableStyle]="{'min-width': '50rem'}"
+        [rows]="10"
+        [paginator]="true">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Selected City</th>
+                <th>Property Name</th>
+                <th>Property Area</th>
+                <th>Monthly Rental</th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-property>
+            <tr>
+                <td>{{property.selectedCity}}</td>
+                <td>{{property.propertyName}}</td>
+                <td>{{property.propertyArea}}</td>
+                <td>{{property.monthlyRental}}</td>
+                <td>
+                    <div class="view-form">
+                        <p-button (onClick)="triggerViewMethod(property)" label="View Property"/>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+<app-property-feature #addProperty></app-property-feature>
+</div>

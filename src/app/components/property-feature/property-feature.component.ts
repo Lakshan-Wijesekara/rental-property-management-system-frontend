@@ -1,43 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, output } from '@angular/core';
+import { Marker } from '../../interfaces/marker';
+import { MarkerService } from '../../services/marker.service';
+import { Property } from '../../interfaces/property';
+import { CitydataService } from '../../services/citydata.service';
+import { PropertydataService } from '../../services/propertydata.service';
+import { MessageService } from 'primeng/api';
+import { City } from '../../interfaces/city';
 import {
   FormGroup,
   FormControl,
   Validators,
   FormGroupDirective,
 } from '@angular/forms';
-import { CitydataService } from '../../services/citydata.service';
-import { City } from '../../interfaces/city';
-import { PropertydataService } from '../../services/propertydata.service';
-import { Property } from '../../interfaces/property';
-import { MessageService } from 'primeng/api';
-import { MarkerService } from '../../services/marker.service';
-import { Marker } from '../../interfaces/marker';
 
-//enum was used here to track the state of add property and update property
 enum propertyState {
   AddProperty = 'addProperty',
   UpdateProperty = 'updateProperty',
 }
 @Component({
-  selector: 'app-properties',
-  templateUrl: './add-property.component.html',
-  styleUrl: './add-property.component.scss',
+  selector: 'app-property-feature',
+  templateUrl: './property-feature.component.html',
+  styleUrl: './property-feature.component.scss',
 })
-export class AddPropertyComponent implements OnInit {
-  groupedCities: City[] = [];
-  inputValue: string | undefined;
-  isAddPropertyVisible: boolean = false;
-  dropdownSelectedCity: string | undefined;
-  //Get the input from the property search box
-  searchText: string = '';
-  selectedLocation!: Marker | undefined;
-  selectedProperty!: Property;
+export class PropertyFeatureComponent implements OnInit {
+  isPropertyFormVisible: boolean = false;
   propertyVisibility = propertyState;
   propertyShowState: propertyState = propertyState.AddProperty;
+  dropdownSelectedCity: string | undefined;
+  selectedLocation!: Marker | undefined;
+  selectedProperty!: Property;
+  groupedCities: City[] = [];
   id: number = 0;
   defaultLatitude: number = 6.9271;
   defaultLongtitude: number = 79.8612;
-  //Reactive form (selectedProperty is not defined since it is a stand-alone component)
+
   reactiveForm: FormGroup = new FormGroup({
     propertyName: new FormControl('', [Validators.required]),
     propertyArea: new FormControl('', [
@@ -49,6 +45,13 @@ export class AddPropertyComponent implements OnInit {
       Validators.required,
     ]),
   });
+
+  constructor(
+    private cityDataService: CitydataService,
+    private markerService: MarkerService,
+    private propertyDataService: PropertydataService,
+    private messageService: MessageService
+  ) {}
 
   get propertyName() {
     return this.reactiveForm.get('propertyName');
@@ -74,22 +77,8 @@ export class AddPropertyComponent implements OnInit {
     this.reactiveForm.get('monthlyRental')?.setValue(value);
   }
 
-  constructor(
-    private cityDataService: CitydataService,
-    private markerService: MarkerService,
-    private propertyDataService: PropertydataService,
-    private messageService: MessageService
-  ) {}
-
   ngOnInit(): void {
     this.getCities();
-    this.fetchProperties();
-  }
-
-  //Show the pop-up
-  showDialog(): void {
-    this.propertyShowState = this.propertyVisibility.AddProperty;
-    this.isAddPropertyVisible = true;
   }
 
   selectedLatitude(): number {
@@ -108,69 +97,18 @@ export class AddPropertyComponent implements OnInit {
     return this.selectedProperty?.longtitude!;
   }
 
-  //To update the property with a new value
-  updateProperty(propertyform: FormGroupDirective, id: number): void {
-    const updatedProperty = {
-      id: id,
-      selectedCity: this.dropdownSelectedCity!,
-      propertyName: propertyform.value.propertyName,
-      propertyArea: propertyform.value.propertyArea,
-      monthlyRental: propertyform.value.monthlyRental,
-      latitude: this.selectedProperty?.latitude,
-      longtitude: this.selectedProperty?.longtitude,
-    };
-    this.propertyDataService.updateProperty(updatedProperty);
-    this.closeDialog();
-  }
-
-  //View property will assign the values according to changes in the DOM
-  viewDialog(property: Property): void {
-    this.propertyShowState = this.propertyVisibility.UpdateProperty;
-    this.selectedProperty = property;
-    this.fillFormData();
-    this.isAddPropertyVisible = true;
-  }
-
-  fillFormData(): void {
-    this.id = this.selectedProperty.id || 0;
-    this.dropdownSelectedCity = this.selectedProperty.selectedCity;
-    this.propertyName = this.selectedProperty.propertyName;
-    this.propertyArea = this.selectedProperty.propertyArea;
-    this.monthlyRental = this.selectedProperty.monthlyRental;
-  }
-
-  clearFormData(): void {
-    this.id = 0;
-    this.dropdownSelectedCity = '';
-    this.propertyName = '';
-    this.propertyArea = '';
-    this.monthlyRental = '';
-  }
-
   //Close the pop-up
   closeDialog(): void {
-    this.isAddPropertyVisible = false;
+    this.isPropertyFormVisible = false;
     this.clearFormData();
   }
 
-  //When calling the property list, if there's a value in propertySearch box the filter runs
-  getProperties(searchText: string): Property[] {
-    if (searchText) {
-      let property = this.propertyDataService
-        .properties()
-        .filter(
-          (p) =>
-            p.selectedCity?.toLowerCase().includes(searchText.toLowerCase()) ||
-            p.propertyName?.toLowerCase().includes(searchText.toLowerCase()) ||
-            p.propertyArea?.toString().includes(searchText) ||
-            p.monthlyRental?.toString().includes(searchText)
-        );
-      return property;
-    }
-    return this.propertyDataService.properties();
+  //Show the pop-up
+  showDialog(): void {
+    this.propertyShowState = this.propertyVisibility.AddProperty;
+    this.isPropertyFormVisible = true;
   }
 
-  //The dropdownSelectedCity is passed to this method from the html and used to find the specific location
   getPropertyLocation(dropdownSelectedCity: string | undefined): void {
     this.markerService.getMarkerLocation(dropdownSelectedCity!).subscribe({
       next: (marker) => {
@@ -190,6 +128,7 @@ export class AddPropertyComponent implements OnInit {
       },
     });
   }
+
   //Add property to the signal
   addProperty(propertyform: FormGroupDirective): void {
     this.propertyShowState = this.propertyVisibility.AddProperty;
@@ -220,6 +159,30 @@ export class AddPropertyComponent implements OnInit {
     }
   }
 
+  //View property will assign the values according to changes in the DOM
+  viewDialog(property: Property): void {
+    this.propertyShowState = this.propertyVisibility.UpdateProperty;
+    this.selectedProperty = property;
+    this.fillFormData();
+    this.isPropertyFormVisible = true;
+  }
+
+  fillFormData(): void {
+    this.id = this.selectedProperty.id || 0;
+    this.dropdownSelectedCity = this.selectedProperty.selectedCity;
+    this.propertyName = this.selectedProperty.propertyName;
+    this.propertyArea = this.selectedProperty.propertyArea;
+    this.monthlyRental = this.selectedProperty.monthlyRental;
+  }
+
+  clearFormData(): void {
+    this.id = 0;
+    this.dropdownSelectedCity = '';
+    this.propertyName = '';
+    this.propertyArea = '';
+    this.monthlyRental = '';
+  }
+
   onSubmit(propertyform: FormGroupDirective, id: number): void {
     if (this.propertyShowState == this.propertyVisibility.AddProperty) {
       this.addProperty(propertyform);
@@ -230,13 +193,19 @@ export class AddPropertyComponent implements OnInit {
     }
   }
 
-  //PRIVATE
-
-  //Get properties from the properties JSON file
-  private fetchProperties(): void {
-    this.propertyDataService.fetchData().subscribe((propertyJSON) => {
-      this.propertyDataService.properties.set(propertyJSON);
-    });
+  //To update the property with a new value
+  updateProperty(propertyform: FormGroupDirective, id: number): void {
+    const updatedProperty = {
+      id: id,
+      selectedCity: this.dropdownSelectedCity!,
+      propertyName: propertyform.value.propertyName,
+      propertyArea: propertyform.value.propertyArea,
+      monthlyRental: propertyform.value.monthlyRental,
+      latitude: this.selectedProperty?.latitude,
+      longtitude: this.selectedProperty?.longtitude,
+    };
+    this.propertyDataService.updateProperty(updatedProperty);
+    this.closeDialog();
   }
 
   //Get cities from the cities JSON file

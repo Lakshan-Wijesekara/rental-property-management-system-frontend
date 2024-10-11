@@ -4,7 +4,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { authGuard } from './guards/auth.guard';
 import { appGuard } from './guards/app.guard';
-import { AddPropertyComponent } from './pages/property/add-property.component';
+import { PropertyComponent } from './pages/property/property.component';
 import { AddUserComponent } from './pages/user/add-user.component';
 
 export const routes: Routes = [
@@ -25,7 +25,7 @@ export const routes: Routes = [
   },
   {
     path: 'properties',
-    component: AddPropertyComponent,
+    component: PropertyComponent,
     data: {
       title: 'Properties',
       icon: 'pi-building',
