@@ -13,13 +13,18 @@ html,body {
 }
 
 .parent-container{
+    width: 100vw;
     display: flex;
+} 
+
+.add-button{
+    width: 100%;
+    margin-bottom: 18px;
 }
 
-.search{
-    margin-left: auto;
-    justify-content: flex-end;
-}
+.searchbox-container{
+    width: 40%;
+}  
 
 .dialog-box{
     display: flex;
@@ -37,22 +42,30 @@ html,body {
 
 .first-name-box{
     width: 100%;
+    margin-bottom: 22px;
 }
 
 .surname-box{
     width: 100%;
+    margin-bottom: 22px;
+
 }
 
 .property-name-box{
     width: 100%;
+    margin-bottom: 22px;
+
 }
 
 .user-email-box{
     width: 100%;
+    margin-bottom: 22px;
+
 }
 
 .tp-number-box{
     width: 100%;
+    margin-bottom: 22px;
 }
 
 :host ::ng-deep .p-element{
@@ -77,5 +90,5 @@ html,body {
 }
 
 .button-container{
-    width: 100%;
+    display: flex;
 }

@@ -38,4 +38,11 @@ export class UserdataService {
       return successResponse;
     }
   }
+
+  updateUser(updatedUser: User) {
+    let index = this.users().findIndex(
+      (element) => (element.id = updatedUser.id)
+    );
+    return this.users().splice(index, 1, updatedUser);
+  }
 }

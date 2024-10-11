@@ -4,9 +4,10 @@ import { UserdataService } from '../../services/userdata.service';
 import { User } from '../../interfaces/user';
 import { MessageService } from 'primeng/api';
 
-interface Column {
-  field: string;
-  header: string;
+//Use enum to specify two states
+enum propertyVisibility {
+  AddProperty = 'addProperty',
+  UpdateProperty = 'updateProperty',
 }
 @Component({
   selector: 'app-users',
@@ -14,17 +15,18 @@ interface Column {
   styleUrl: './add-user.component.scss',
 })
 export class AddUserComponent implements OnInit {
-  visible: boolean = false;
-
+  _propertyVisibility = propertyVisibility;
+  isAddUserFormvisible: boolean = false;
   firstname: string = '';
   lastname: string = '';
   propertyname: string = '';
   email: string = '';
   telephonenumber: string = '';
-
   //Input from the user from search box
   searchText: string = '';
-
+  id: number = 0;
+  //Assign visibility of add property as default
+  currentPropertyProcess: propertyVisibility = propertyVisibility.AddProperty;
   constructor(
     private userDataService: UserdataService,
     private messageService: MessageService
@@ -32,6 +34,19 @@ export class AddUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchUsers();
+  }
+
+  //This method updates the user according to the user inputs from html
+  updateUserForm(): void {
+    const updatedUser = {
+      id: this.id,
+      firstname: this.firstname,
+      lastname: this.lastname,
+      propertyname: this.propertyname,
+      email: this.email,
+      telephonenumber: this.telephonenumber,
+    };
+    this.userDataService.updateUser(updatedUser);
   }
 
   // users signal from user data service
@@ -54,18 +69,9 @@ export class AddUserComponent implements OnInit {
     }
   }
 
-  getColumns(): Column[] {
-    return [
-      { field: 'firstname', header: 'First Name' },
-      { field: 'lastname', header: 'Last Name' },
-      { field: 'propertyname', header: 'Property Name' },
-      { field: 'email', header: 'Email Address' },
-      { field: 'telephonenumber', header: 'Telephone Number' },
-    ];
-  }
-
   addUser(): void {
     const newUser = {
+      id: this.userDataService.users().length + 1,
       firstname: this.firstname,
       lastname: this.lastname,
       propertyname: this.propertyname,
@@ -94,15 +100,32 @@ export class AddUserComponent implements OnInit {
   }
 
   showDialog(): void {
-    this.visible = true;
+    this.currentPropertyProcess = propertyVisibility.AddProperty;
+    this.isAddUserFormvisible = true;
+  }
+
+  viewUserForm(user: User): any {
+    this.currentPropertyProcess = propertyVisibility.UpdateProperty;
+    this.id = user.id;
+    this.firstname = user.firstname;
+    this.lastname = user.lastname;
+    this.propertyname = user.propertyname;
+    this.email = user.email;
+    this.telephonenumber = user.telephonenumber;
+    this.isAddUserFormvisible = true;
   }
 
   closeDialog(): void {
-    this.visible = false;
+    this.isAddUserFormvisible = false;
   }
 
+  //On submit, the method checks if the currentPropertyProcess is similar to add property or update property
   onSubmit(): void {
-    this.addUser();
+    if (this.currentPropertyProcess == propertyVisibility.AddProperty) {
+      this.addUser();
+    } else {
+      this.updateUserForm();
+    }
   }
 
   // PRIVATE
