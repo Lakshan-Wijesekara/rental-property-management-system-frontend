@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, viewChild } from '@angular/core';
 import { PropertydataService } from '../../services/propertydata.service';
 import { Property } from '../../interfaces/property';
-import { PropertyFeatureComponent } from '../../components/property-features/property-add-view-update-features.component';
+import { PropertyAddViewUpdateFeaturesComponent } from '../../components/property-features/property-add-view-update-features.component';
 
 @Component({
-  selector: 'app-properties',
+  selector: 'properties',
   templateUrl: './properties.component.html',
   styleUrl: './properties.component.scss',
 })
@@ -13,7 +13,9 @@ export class PropertiesComponent implements OnInit {
   inputValue: string | undefined;
   //Get the input from the property search box
   searchText: string = '';
-  @ViewChild('addProperty') addProperty: PropertyFeatureComponent | undefined;
+  @ViewChild('addProperty') addProperty:
+    | PropertyAddViewUpdateFeaturesComponent
+    | undefined;
   constructor(
     private propertyDataService: PropertydataService // private messageService: MessageService
   ) {}

@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PropertyFeatureComponent } from './property-add-view-update-features.component';
+import { PropertyAddViewUpdateFeaturesComponent } from './property-add-view-update-features.component';
 
 describe('AddPropertyComponent', () => {
-  let component: PropertyFeatureComponent;
-  let fixture: ComponentFixture<PropertyFeatureComponent>;
+  let component: PropertyAddViewUpdateFeaturesComponent;
+  let fixture: ComponentFixture<PropertyAddViewUpdateFeaturesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PropertyFeatureComponent],
+      declarations: [PropertyAddViewUpdateFeaturesComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PropertyFeatureComponent);
+    fixture = TestBed.createComponent(PropertyAddViewUpdateFeaturesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

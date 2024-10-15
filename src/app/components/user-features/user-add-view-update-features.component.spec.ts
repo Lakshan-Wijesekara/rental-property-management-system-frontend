@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserFeatureComponent } from './user-add-view-update-features.component';
+import { UserAddViewUpdateFeaturesComponent } from './user-add-view-update-features.component';
 
 describe('UserFeatureComponent', () => {
-  let component: UserFeatureComponent;
-  let fixture: ComponentFixture<UserFeatureComponent>;
+  let component: UserAddViewUpdateFeaturesComponent;
+  let fixture: ComponentFixture<UserAddViewUpdateFeaturesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [UserFeatureComponent],
+      declarations: [UserAddViewUpdateFeaturesComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(UserFeatureComponent);
+    fixture = TestBed.createComponent(UserAddViewUpdateFeaturesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

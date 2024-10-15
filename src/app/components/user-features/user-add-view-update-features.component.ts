@@ -9,11 +9,11 @@ enum propertyVisibility {
   UpdateProperty = 'updateProperty',
 }
 @Component({
-  selector: 'user-features',
+  selector: 'user-add-view-update-features',
   templateUrl: './user-add-view-update-features.component.html',
   styleUrl: './user-add-view-update-features.component.scss',
 })
-export class UserFeatureComponent {
+export class UserAddViewUpdateFeaturesComponent {
   _propertyVisibility = propertyVisibility;
   isAddUserFormvisible: boolean = false;
   firstname: string = '';

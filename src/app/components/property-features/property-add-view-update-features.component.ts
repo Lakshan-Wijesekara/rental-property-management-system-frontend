@@ -18,11 +18,11 @@ enum propertyState {
   UpdateProperty = 'updateProperty',
 }
 @Component({
-  selector: 'property-features',
+  selector: 'property-add-view-update-features',
   templateUrl: './property-add-view-update-features.component.html',
   styleUrl: './property-add-view-update-features.component.scss',
 })
-export class PropertyFeatureComponent implements OnInit {
+export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
   isPropertyFormVisible: boolean = false;
   propertyVisibility = propertyState;
   propertyShowState: propertyState = propertyState.AddProperty;

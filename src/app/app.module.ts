@@ -18,8 +18,8 @@ import { ValidatorDirDirective } from './directives/tpvalidator.directive';
 import { BreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MapComponent } from './components/map/map.component';
-import { PropertyFeatureComponent } from './components/property-features/property-add-view-update-features.component';
-import { UserFeatureComponent } from './components/user-features/user-add-view-update-features.component';
+import { PropertyAddViewUpdateFeaturesComponent } from './components/property-features/property-add-view-update-features.component';
+import { UserAddViewUpdateFeaturesComponent } from './components/user-features/user-add-view-update-features.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,8 +29,8 @@ import { UserFeatureComponent } from './components/user-features/user-add-view-u
     ValidatorDirDirective,
     BreadcrumbComponent,
     MapComponent,
-    PropertyFeatureComponent,
-    UserFeatureComponent,
+    PropertyAddViewUpdateFeaturesComponent,
+    UserAddViewUpdateFeaturesComponent,
   ],
   imports: [
     AppRoutingModule,
