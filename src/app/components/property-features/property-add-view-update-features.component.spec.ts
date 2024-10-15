@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PropertyFeatureComponent } from './property-feature.component';
+import { PropertyFeatureComponent } from './property-add-view-update-features.component';
 
 describe('AddPropertyComponent', () => {
   let component: PropertyFeatureComponent;

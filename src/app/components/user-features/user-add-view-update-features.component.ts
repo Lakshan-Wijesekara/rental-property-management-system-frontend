@@ -9,9 +9,9 @@ enum propertyVisibility {
   UpdateProperty = 'updateProperty',
 }
 @Component({
-  selector: 'app-user-feature',
-  templateUrl: './user-feature.component.html',
-  styleUrl: './user-feature.component.scss',
+  selector: 'user-features',
+  templateUrl: './user-add-view-update-features.component.html',
+  styleUrl: './user-add-view-update-features.component.scss',
 })
 export class UserFeatureComponent {
   _propertyVisibility = propertyVisibility;
@@ -41,7 +41,6 @@ export class UserFeatureComponent {
     };
 
     const response = this.userDataService.addUser(newUser);
-
     if (response.status === 'success') {
       //add toast messages for user
       this.messageService.add({
@@ -105,7 +104,21 @@ export class UserFeatureComponent {
       email: this.email,
       telephonenumber: this.telephonenumber,
     };
-    this.userDataService.updateUser(updatedUser);
+    const response = this.userDataService.updateUser(updatedUser);
+    if (response.status === 'success') {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Property added successfully',
+      });
+      this.closeDialog();
+    } else {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Error occurred',
+      });
+    }
   }
 
   //On submit, the method checks if the currentPropertyProcess is similar to add property or update property

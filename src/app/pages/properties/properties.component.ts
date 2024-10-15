@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewChild, viewChild } from '@angular/core';
 import { PropertydataService } from '../../services/propertydata.service';
 import { Property } from '../../interfaces/property';
-import { PropertyFeatureComponent } from '../../components/property-feature/property-feature.component';
+import { PropertyFeatureComponent } from '../../components/property-features/property-add-view-update-features.component';
 
 @Component({
   selector: 'app-properties',
-  templateUrl: './property.component.html',
-  styleUrl: './property.component.scss',
+  templateUrl: './properties.component.html',
+  styleUrl: './properties.component.scss',
 })
-export class PropertyComponent implements OnInit {
+export class PropertiesComponent implements OnInit {
   // groupedCities: City[] = [];
   inputValue: string | undefined;
   //Get the input from the property search box

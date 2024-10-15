@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserFeatureComponent } from './user-feature.component';
+import { UserFeatureComponent } from './user-add-view-update-features.component';
 
 describe('UserFeatureComponent', () => {
   let component: UserFeatureComponent;
@@ -8,9 +8,8 @@ describe('UserFeatureComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [UserFeatureComponent]
-    })
-    .compileComponents();
+      declarations: [UserFeatureComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(UserFeatureComponent);
     component = fixture.componentInstance;

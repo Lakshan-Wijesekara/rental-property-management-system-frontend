@@ -18,9 +18,9 @@ enum propertyState {
   UpdateProperty = 'updateProperty',
 }
 @Component({
-  selector: 'app-property-feature',
-  templateUrl: './property-feature.component.html',
-  styleUrl: './property-feature.component.scss',
+  selector: 'property-features',
+  templateUrl: './property-add-view-update-features.component.html',
+  styleUrl: './property-add-view-update-features.component.scss',
 })
 export class PropertyFeatureComponent implements OnInit {
   isPropertyFormVisible: boolean = false;
@@ -204,8 +204,21 @@ export class PropertyFeatureComponent implements OnInit {
       latitude: this.selectedProperty?.latitude,
       longtitude: this.selectedProperty?.longtitude,
     };
-    this.propertyDataService.updateProperty(updatedProperty);
-    this.closeDialog();
+    const response = this.propertyDataService.updateProperty(updatedProperty);
+    if (response.status === 'success') {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Property added successfully',
+      });
+      this.closeDialog();
+    } else {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Error occurred',
+      });
+    }
   }
 
   //Get cities from the cities JSON file

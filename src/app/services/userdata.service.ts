@@ -40,9 +40,24 @@ export class UserdataService {
   }
 
   updateUser(updatedUser: User) {
-    let index = this.users().findIndex(
-      (element) => element.id == updatedUser.id
-    );
-    return this.users().splice(index, 1, updatedUser);
+    try {
+      let index = this.users().findIndex(
+        (element) => element.id == updatedUser.id
+      );
+      this.users().splice(index, 1, updatedUser);
+      const response = {
+        status: 'success',
+        message: 'Property added',
+        data: updatedUser,
+      };
+      return response;
+    } catch (error) {
+      const errorResponse = {
+        status: 'unsuccessful',
+        message: 'Error occurred',
+        data: updatedUser,
+      };
+      return errorResponse;
+    }
   }
 }

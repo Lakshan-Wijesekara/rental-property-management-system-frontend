@@ -2,14 +2,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserdataService } from '../../services/userdata.service';
 import { User } from '../../interfaces/user';
-import { UserFeatureComponent } from '../../components/user-feature/user-feature.component';
+import { UserFeatureComponent } from '../../components/user-features/user-add-view-update-features.component';
 
 @Component({
   selector: 'app-users',
-  templateUrl: './user.component.html',
-  styleUrl: './user.component.scss',
+  templateUrl: './users.component.html',
+  styleUrl: './users.component.scss',
 })
-export class UserComponent implements OnInit {
+export class UsersComponent implements OnInit {
   //Input from the user from search box
   searchText: string = '';
   @ViewChild('userFeature') userFeature: UserFeatureComponent | undefined;

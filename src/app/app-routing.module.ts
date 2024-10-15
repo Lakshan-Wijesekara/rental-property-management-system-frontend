@@ -4,8 +4,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { authGuard } from './guards/auth.guard';
 import { appGuard } from './guards/app.guard';
-import { PropertyComponent } from './pages/property/property.component';
-import { UserComponent } from './pages/user/user.component';
+import { PropertiesComponent } from './pages/properties/properties.component';
+import { UsersComponent } from './pages/users/users.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -25,7 +25,7 @@ export const routes: Routes = [
   },
   {
     path: 'properties',
-    component: PropertyComponent,
+    component: PropertiesComponent,
     data: {
       title: 'Properties',
       icon: 'pi-building',
@@ -33,7 +33,7 @@ export const routes: Routes = [
   },
   {
     path: 'users',
-    component: UserComponent,
+    component: UsersComponent,
     data: {
       title: 'Users',
       icon: 'pi-users',
