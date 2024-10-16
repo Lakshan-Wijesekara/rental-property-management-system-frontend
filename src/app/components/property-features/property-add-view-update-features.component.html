@@ -1,0 +1,51 @@
+<div class = "pop-up-form">
+    <p-dialog [header]='propertyShowState==propertyVisibility.AddProperty? "Add Property": "Update Property"' (onHide)="closeDialog()" [modal]="true" [(visible)]="isPropertyFormVisible">
+        <form class = "add-property-form" #propertyForm="ngForm" [formGroup] = "reactiveForm" (ngSubmit)="onSubmit(propertyForm , id)">
+            <div class = "parent-form">
+                    <div class = "column">
+                            <p-dropdown
+                                [ngModelOptions]="{standalone: true}"
+                                [(ngModel)]="dropdownSelectedCity" 
+                                (onChange)="getPropertyLocation(dropdownSelectedCity)"
+                                [options]="groupedCities" 
+                                placeholder="Select the City"
+                                [group]="true">
+                                    <ng-template let-group pTemplate="group">
+                                        <div class="flex align-items-center">
+                                            <img 
+                                                src=".\assets\Western Province logo.png"
+                                                class="western-flag" 
+                                                />
+                                            <span>{{ group.label }}</span>
+                                        </div>
+                                    </ng-template>
+                            </p-dropdown>
+                        <div class="row"></div>
+                        <div class="map-view" *ngIf="propertyShowState==propertyVisibility.AddProperty">
+                            <app-map [lat]="selectedLatitude()" [lng]="selectedLongtitude()"></app-map>
+                        </div>
+                        <div class="map-view" *ngIf="propertyShowState==propertyVisibility.UpdateProperty">
+                            <app-map [lat]="selectedPropertyLatitude()" [lng]="selectedPropertyLongtitude()" ></app-map>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <p-floatLabel>
+                            <input class="property-name-box" pInputText id="Property-Name" [formControlName]="'propertyName'"/>
+                            <label class="floatLabel">Property Name</label>
+                        </p-floatLabel>
+                        <p-floatLabel>
+                            <input class="property-size" pInputText id="property-size" [formControlName]="'propertyArea'"/> 
+                            <label class="floatLabel"> Property Area (sq.ft) </label>
+                        </p-floatLabel>
+                        <p-floatLabel>
+                            <input class="monthly-rental" pInputText id="monthly-rental" [formControlName]="'monthlyRental'"/>
+                            <label class="floatLabel"> Monthly Rental </label> 
+                        </p-floatLabel>
+                        <div class="button-container">
+                            <p-button class="submit-btn" [disabled]="!propertyForm.valid" type="submit" [raised]="true" [label]="propertyShowState==propertyVisibility.AddProperty? 'Add':'Update'" severity="warning"  />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </p-dialog>
+</div>

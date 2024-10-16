@@ -7,26 +7,30 @@ import { provideHttpClient } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { AddPropertyComponent } from './pages/property/add-property.component';
+import { PropertiesComponent } from './pages/properties/properties.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { HeaderComponent } from './components/header/header.component';
 import { PrimengModule } from './shared/primeng.module';
 import { HomeModule } from './pages/home/home.module';
-import { AddUserComponent } from './pages/user/add-user.component';
+import { UsersComponent } from './pages/users/users.component';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { ValidatorDirDirective } from './directives/tpvalidator.directive';
 import { BreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MapComponent } from './components/map/map.component';
+import { PropertyAddViewUpdateFeaturesComponent } from './components/property-features/property-add-view-update-features.component';
+import { UserAddViewUpdateFeaturesComponent } from './components/user-features/user-add-view-update-features.component';
 @NgModule({
   declarations: [
     AppComponent,
-    AddPropertyComponent,
+    PropertiesComponent,
     HeaderComponent,
-    AddUserComponent,
+    UsersComponent,
     ValidatorDirDirective,
     BreadcrumbComponent,
     MapComponent,
+    PropertyAddViewUpdateFeaturesComponent,
+    UserAddViewUpdateFeaturesComponent,
   ],
   imports: [
     AppRoutingModule,

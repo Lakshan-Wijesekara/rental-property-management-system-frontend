@@ -1,0 +1,39 @@
+html,body {
+    overflow: hidden;
+    height: 100%;
+    margin:0;
+}
+
+.row{
+    margin-top: 22px;
+}
+
+.property-table{
+    margin-bottom: 22px;
+}
+
+.p-text-secondary{
+    margin-bottom: 30px;
+}
+
+.row-button{
+    margin: 25px ;
+}
+
+.parent-container{
+    display:flex;
+    margin-bottom: 22px;
+}
+
+.property-card{
+    border-style: none;
+}
+
+.search{
+    margin-left: auto;
+    justify-content: flex-end;
+}
+
+:host ::ng-deep .p-dropdown{
+    width: 100%;
+}
