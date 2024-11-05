@@ -30,7 +30,7 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
   selectedLocation!: Marker | undefined;
   selectedProperty!: Property;
   groupedCities: City[] = [];
-  id: number = 0;
+  id!: { $oid: string };
   defaultLatitude: number = 6.9271;
   defaultLongtitude: number = 79.8612;
 
@@ -132,8 +132,10 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
   //Add property to the signal
   addProperty(propertyform: FormGroupDirective): void {
     this.propertyShowState = this.propertyVisibility.AddProperty;
-    const newProperty = {
-      id: this.propertyDataService.properties().length + 1,
+    const newProperty: Property = {
+      id: {
+        $oid: (this.propertyDataService.properties().length + 1).toString(),
+      },
       selectedCity: this.dropdownSelectedCity!,
       propertyName: propertyform.value.propertyName,
       propertyArea: propertyform.value.propertyArea,
@@ -168,7 +170,7 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
   }
 
   fillFormData(): void {
-    this.id = this.selectedProperty.id || 0;
+    this.id = this.selectedProperty.id;
     this.dropdownSelectedCity = this.selectedProperty.selectedCity;
     this.propertyName = this.selectedProperty.propertyName;
     this.propertyArea = this.selectedProperty.propertyArea;
@@ -176,14 +178,14 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
   }
 
   clearFormData(): void {
-    this.id = 0;
+    this.id = { $oid: '' };
     this.dropdownSelectedCity = '';
     this.propertyName = '';
     this.propertyArea = '';
     this.monthlyRental = '';
   }
 
-  onSubmit(propertyform: FormGroupDirective, id: number): void {
+  onSubmit(propertyform: FormGroupDirective, id: { $oid: string }): void {
     if (this.propertyShowState == this.propertyVisibility.AddProperty) {
       this.addProperty(propertyform);
     } else if (
@@ -194,7 +196,7 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
   }
 
   //To update the property with a new value
-  updateProperty(propertyform: FormGroupDirective, id: number): void {
+  updateProperty(propertyform: FormGroupDirective, id: { $oid: string }): void {
     const updatedProperty = {
       id: id,
       selectedCity: this.dropdownSelectedCity!,

@@ -31,32 +31,31 @@ export class UserAddViewUpdateFeaturesComponent {
   ) {}
 
   addUser(): void {
-    const newUser = {
-      id: this.userDataService.users().length + 1,
-      firstname: this.firstname,
-      lastname: this.lastname,
-      propertyname: this.propertyname,
-      email: this.email,
-      telephonenumber: this.telephonenumber,
-    };
-
-    const response = this.userDataService.addUser(newUser);
-    if (response.status === 'success') {
-      //add toast messages for user
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'User added successfully',
-      });
-      // close dialog when a user is successfully added
-      this.closeDialog();
-    } else {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Error occurred',
-      });
-    }
+    // const newUser = {
+    //   id: this.userDataService.users().length + 1,
+    //   firstname: this.firstname,
+    //   lastname: this.lastname,
+    //   propertyname: this.propertyname,
+    //   email: this.email,
+    //   telephonenumber: this.telephonenumber,
+    // };
+    // const response = this.userDataService.addUser(newUser);
+    // if (response.status === 'success') {
+    //   //add toast messages for user
+    //   this.messageService.add({
+    //     severity: 'success',
+    //     summary: 'Success',
+    //     detail: 'User added successfully',
+    //   });
+    //   // close dialog when a user is successfully added
+    //   this.closeDialog();
+    // } else {
+    //   this.messageService.add({
+    //     severity: 'error',
+    //     summary: 'Error',
+    //     detail: 'Error occurred',
+    //   });
+    // }
   }
 
   showDialog(): void {
