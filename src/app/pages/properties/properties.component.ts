@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, viewChild } from '@angular/core';
 import { PropertydataService } from '../../services/propertydata.service';
 import { Property } from '../../interfaces/property';
 import { PropertyAddViewUpdateFeaturesComponent } from '../../components/property-features/property-add-view-update-features.component';
-import { PaginateResponse } from '../../interfaces/data-response';
 
 @Component({
   selector: 'properties',
@@ -53,7 +52,6 @@ export class PropertiesComponent implements OnInit {
   private fetchProperties(): void {
     this.propertyDataService.fetchData().subscribe({
       next: (response) => {
-        console.log('Fetched property list:', response.data); // Log the fetched data
         if (response && Array.isArray(response.data)) {
           this.properties = response.data; // Access the data array
         } else {
