@@ -1,5 +1,5 @@
 export interface Property {
-  id: { $oid: string };
+  id: string;
   selectedCity?: string;
   propertyName?: string;
   propertyArea?: string;

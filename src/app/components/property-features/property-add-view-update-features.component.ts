@@ -30,7 +30,7 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
   selectedLocation!: Marker | undefined;
   selectedProperty!: Property;
   groupedCities: City[] = [];
-  id!: { $oid: string };
+  id!: string;
   defaultLatitude: number = 6.9271;
   defaultLongtitude: number = 79.8612;
 
@@ -133,9 +133,7 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
   addProperty(propertyform: FormGroupDirective): void {
     this.propertyShowState = this.propertyVisibility.AddProperty;
     const newProperty: Property = {
-      id: {
-        $oid: (this.propertyDataService.properties().length + 1).toString(),
-      },
+      id: (this.propertyDataService.properties().length + 1).toString(),
       selectedCity: this.dropdownSelectedCity!,
       propertyName: propertyform.value.propertyName,
       propertyArea: propertyform.value.propertyArea,
@@ -178,14 +176,14 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
   }
 
   clearFormData(): void {
-    this.id = { $oid: '' };
+    this.id = '';
     this.dropdownSelectedCity = '';
     this.propertyName = '';
     this.propertyArea = '';
     this.monthlyRental = '';
   }
 
-  onSubmit(propertyform: FormGroupDirective, id: { $oid: string }): void {
+  onSubmit(propertyform: FormGroupDirective, id: string): void {
     if (this.propertyShowState == this.propertyVisibility.AddProperty) {
       this.addProperty(propertyform);
     } else if (
@@ -196,7 +194,7 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
   }
 
   //To update the property with a new value
-  updateProperty(propertyform: FormGroupDirective, id: { $oid: string }): void {
+  updateProperty(propertyform: FormGroupDirective, id: string): void {
     const updatedProperty = {
       id: id,
       selectedCity: this.dropdownSelectedCity!,
