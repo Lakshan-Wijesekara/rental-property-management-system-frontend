@@ -1,9 +1,11 @@
 export interface Property {
-  id?: number;
+  id: string;
   selectedCity?: string;
   propertyName?: string;
-  propertyArea?: number;
-  monthlyRental?: number;
+  propertyArea?: string;
+  monthlyRental?: string;
   latitude?: number;
   longtitude?: number;
 }
+
+//Response is common
