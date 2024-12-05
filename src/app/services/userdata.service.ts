@@ -20,7 +20,6 @@ export class UserdataService {
   addUser(user: User) {
     try {
       // we can send these data to external API later
-      // for now, we update the ng signal
       this.users().push(user);
       const successResponse = {
         status: 'success',

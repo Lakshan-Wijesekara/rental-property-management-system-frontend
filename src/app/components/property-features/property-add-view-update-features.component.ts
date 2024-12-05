@@ -1,4 +1,4 @@
-import { Component, OnInit, output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Marker } from '../../interfaces/marker';
 import { MarkerService } from '../../services/marker.service';
 import { Property } from '../../interfaces/property';
@@ -12,7 +12,6 @@ import {
   Validators,
   FormGroupDirective,
 } from '@angular/forms';
-import { log } from 'node:console';
 
 enum propertyState {
   AddProperty = 'addProperty',
@@ -31,7 +30,6 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
   selectedLocation!: Marker | undefined;
   selectedProperty!: Property;
   groupedCities: City[] = [];
-  // : string = "";
   defaultLatitude: number = 6.9271;
   defaultLongtitude: number = 79.8612;
 
@@ -144,20 +142,21 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
 
     this.propertyDataService.addProperty(newProperty).subscribe({
       next: (response) => {
-        if (response.message === 'Operation was successful!') {
+        if (response.status === true) {
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
-            detail: 'Property added successfully',
+            detail: response.message,
           });
           this.closeDialog();
         }
       },
-      error: (e) => {
+      error: (error) => {
+        console.error('Full Error Object:', error); // Log the error object
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'Error occurred',
+          detail: error.error.message,
         });
       },
     });
@@ -165,8 +164,6 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
 
   //View property will assign the values according to changes in the DOM
   viewDialog(property: Property): void {
-    console.log('Property: ', property);
-
     this.propertyShowState = this.propertyVisibility.UpdateProperty;
     this.selectedProperty = property;
     this.fillFormData();
@@ -174,7 +171,6 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
   }
 
   fillFormData(): void {
-    // this.id = this.selectedProperty._id
     this.dropdownSelectedCity = this.selectedProperty.selectedCity;
     this.propertyName = this.selectedProperty.propertyName;
     this.propertyArea = this.selectedProperty.propertyArea;
@@ -182,7 +178,6 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
   }
 
   clearFormData(): void {
-    // this.id = '';
     this.dropdownSelectedCity = '';
     this.propertyName = '';
     this.propertyArea = '';
@@ -214,20 +209,20 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
       .updateProperty(updatedProperty, this.selectedProperty._id)
       .subscribe({
         next: (response) => {
-          if (response) {
+          if (response.status) {
             this.messageService.add({
               severity: 'success',
               summary: 'Success',
-              detail: 'Property added successfully',
+              detail: response.message,
             });
             this.closeDialog();
           }
         },
-        error: (e) => {
+        error: (error) => {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Error occurred',
+            detail: error.error.message,
           });
         },
       });
