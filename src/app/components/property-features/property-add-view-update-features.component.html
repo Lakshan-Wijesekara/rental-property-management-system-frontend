@@ -1,6 +1,6 @@
 <div class = "pop-up-form">
     <p-dialog [header]='propertyShowState==propertyVisibility.AddProperty? "Add Property": "Update Property"' (onHide)="closeDialog()" [modal]="true" [(visible)]="isPropertyFormVisible">
-        <form class = "add-property-form" #propertyForm="ngForm" [formGroup] = "reactiveForm" (ngSubmit)="onSubmit(propertyForm , id)">
+        <form class = "add-property-form" #propertyForm="ngForm" [formGroup] = "reactiveForm" (ngSubmit)="onSubmit(propertyForm)">
             <div class = "parent-form">
                     <div class = "column">
                             <p-dropdown
