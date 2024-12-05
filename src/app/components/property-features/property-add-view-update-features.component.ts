@@ -215,13 +215,14 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
       .updateProperty(updatedProperty, this.selectedProperty._id)
       .subscribe({
         next: (response) => {
-          // if (response.status === 'success') {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Property added successfully',
-          });
-          this.closeDialog();
+          if (response) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Property added successfully',
+            });
+            this.closeDialog();
+          }
         },
         error: (e) => {
           this.messageService.add({

@@ -31,4 +31,8 @@ export class PropertydataService {
       updatedProperty
     );
   }
+
+  deactivateProperty(id: string): Observable<any> {
+    return this.http.delete(this.apiUrl + '/api/properties/' + id);
+  }
 }
