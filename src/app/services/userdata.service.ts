@@ -18,24 +18,23 @@ export class UserdataService {
   }
 
   addUser(user: User) {
-    // try {
-    //   // we can send these data to external API later
-    //   // for now, we update the ng signal
-    //   this.users().push(user);
-    //   const successResponse = {
-    //     status: 'success',
-    //     message: 'User added',
-    //     data: user,
-    //   };
-    //   return successResponse;
-    // } catch (error) {
-    //   const successResponse = {
-    //     status: 'error',
-    //     message: 'Error while adding user',
-    //     data: user,
-    //   };
-    //   return successResponse;
-    // }
+    try {
+      // we can send these data to external API later
+      this.users().push(user);
+      const successResponse = {
+        status: 'success',
+        message: 'User added',
+        data: user,
+      };
+      return successResponse;
+    } catch (error) {
+      const successResponse = {
+        status: 'error',
+        message: 'Error while adding user',
+        data: user,
+      };
+      return successResponse;
+    }
   }
 
   updateUser(updatedUser: User) {

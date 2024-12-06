@@ -1,4 +1,4 @@
-import { Component, OnInit, output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Marker } from '../../interfaces/marker';
 import { MarkerService } from '../../services/marker.service';
 import { Property } from '../../interfaces/property';
@@ -30,7 +30,6 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
   selectedLocation!: Marker | undefined;
   selectedProperty!: Property;
   groupedCities: City[] = [];
-  id!: string;
   defaultLatitude: number = 6.9271;
   defaultLongtitude: number = 79.8612;
 
@@ -129,11 +128,10 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
     });
   }
 
-  //Add property to the signal
+  //Add property to the database
   addProperty(propertyform: FormGroupDirective): void {
     this.propertyShowState = this.propertyVisibility.AddProperty;
     const newProperty: Property = {
-      id: (this.propertyDataService.properties().length + 1).toString(),
       selectedCity: this.dropdownSelectedCity!,
       propertyName: propertyform.value.propertyName,
       propertyArea: propertyform.value.propertyArea,
@@ -142,21 +140,26 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
       longtitude: this.selectedLocation?.lng,
     };
 
-    const response = this.propertyDataService.addProperty(newProperty);
-    if (response.status === 'success') {
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Property added successfully',
-      });
-      this.closeDialog();
-    } else {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Error occurred',
-      });
-    }
+    this.propertyDataService.addProperty(newProperty).subscribe({
+      next: (response) => {
+        if (response.status === true) {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: response.message,
+          });
+          this.closeDialog();
+        }
+      },
+      error: (error) => {
+        console.error('Full Error Object:', error); // Log the error object
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error.error.message,
+        });
+      },
+    });
   }
 
   //View property will assign the values according to changes in the DOM
@@ -168,7 +171,6 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
   }
 
   fillFormData(): void {
-    this.id = this.selectedProperty.id;
     this.dropdownSelectedCity = this.selectedProperty.selectedCity;
     this.propertyName = this.selectedProperty.propertyName;
     this.propertyArea = this.selectedProperty.propertyArea;
@@ -176,27 +178,25 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
   }
 
   clearFormData(): void {
-    this.id = '';
     this.dropdownSelectedCity = '';
     this.propertyName = '';
     this.propertyArea = '';
     this.monthlyRental = '';
   }
 
-  onSubmit(propertyform: FormGroupDirective, id: string): void {
+  onSubmit(propertyform: FormGroupDirective): void {
     if (this.propertyShowState == this.propertyVisibility.AddProperty) {
       this.addProperty(propertyform);
     } else if (
       this.propertyShowState == this.propertyVisibility.UpdateProperty
     ) {
-      this.updateProperty(propertyform, id);
+      this.updateProperty(propertyform);
     }
   }
 
   //To update the property with a new value
-  updateProperty(propertyform: FormGroupDirective, id: string): void {
+  updateProperty(propertyform: FormGroupDirective): void {
     const updatedProperty = {
-      id: id,
       selectedCity: this.dropdownSelectedCity!,
       propertyName: propertyform.value.propertyName,
       propertyArea: propertyform.value.propertyArea,
@@ -204,21 +204,28 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
       latitude: this.selectedProperty?.latitude,
       longtitude: this.selectedProperty?.longtitude,
     };
-    const response = this.propertyDataService.updateProperty(updatedProperty);
-    if (response.status === 'success') {
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Property added successfully',
+
+    this.propertyDataService
+      .updateProperty(updatedProperty, this.selectedProperty._id)
+      .subscribe({
+        next: (response) => {
+          if (response.status) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: response.message,
+            });
+            this.closeDialog();
+          }
+        },
+        error: (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: error.error.message,
+          });
+        },
       });
-      this.closeDialog();
-    } else {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Error occurred',
-      });
-    }
   }
 
   //Get cities from the cities JSON file
