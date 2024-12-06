@@ -20,7 +20,7 @@ export class UserAddViewUpdateFeaturesComponent {
   lastname: string = '';
   propertyname: string = '';
   email: string = '';
-  telephonenumber: string = '';
+  telephonenumber: number = 0;
   id: number = 0;
   selectedUser!: User;
   currentPropertyProcess: propertyVisibility = propertyVisibility.AddProperty;
@@ -90,7 +90,7 @@ export class UserAddViewUpdateFeaturesComponent {
     this.lastname = '';
     this.propertyname = '';
     this.email = '';
-    this.telephonenumber = '';
+    this.telephonenumber = 0;
   }
 
   //This method updates the user according to the user inputs from html
@@ -104,7 +104,7 @@ export class UserAddViewUpdateFeaturesComponent {
       telephonenumber: this.telephonenumber,
     };
     const response = this.userDataService.updateUser(updatedUser);
-    if (response.status === 'success') {
+    if (response) {
       this.messageService.add({
         severity: 'success',
         summary: 'Success',
