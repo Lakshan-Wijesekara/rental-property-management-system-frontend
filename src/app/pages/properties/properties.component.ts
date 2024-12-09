@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, viewChild } from '@angular/core';
 import { PropertydataService } from '../../services/propertydata.service';
 import { Property } from '../../interfaces/property';
 import { PropertyAddViewUpdateFeaturesComponent } from '../../components/property-features/property-add-view-update-features.component';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'properties',
@@ -17,7 +18,8 @@ export class PropertiesComponent implements OnInit {
     | PropertyAddViewUpdateFeaturesComponent
     | undefined;
   constructor(
-    private propertyDataService: PropertydataService // private messageService: MessageService
+    private propertyDataService: PropertydataService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -55,11 +57,19 @@ export class PropertiesComponent implements OnInit {
         if (response && Array.isArray(response.data)) {
           this.properties = response.data; // Access the data array
         } else {
-          console.error('Expected data to be an array but got:', response);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'System error!',
+            detail: 'Expected data to be an array',
+          });
         }
       },
       error: (err) => {
-        console.error('Error fetching properties:', err); // Handle error if any
+        this.messageService.add({
+          severity: 'error',
+          summary: 'System error!',
+          detail: 'Error occured while retrieving properties!',
+        }); // Handle error if any
       },
     });
   }

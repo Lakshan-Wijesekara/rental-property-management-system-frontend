@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserdataService } from '../../services/userdata.service';
 import { User } from '../../interfaces/user';
 import { UserAddViewUpdateFeaturesComponent } from '../../components/user-features/user-add-view-update-features.component';
-import { response } from 'express';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'users',
@@ -18,7 +18,10 @@ export class UsersComponent implements OnInit {
     | UserAddViewUpdateFeaturesComponent
     | undefined;
 
-  constructor(private userDataService: UserdataService) {}
+  constructor(
+    private userDataService: UserdataService,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
     this.fetchUsers();
@@ -32,7 +35,6 @@ export class UsersComponent implements OnInit {
     this.userFeature?.viewUserForm(user);
   }
 
-  // users signal from user data service
   // If there's a value inside search box the filter runs else all the values will return
   getUsers(searchText: string): User[] {
     if (searchText) {
@@ -40,10 +42,11 @@ export class UsersComponent implements OnInit {
         (p) =>
           p.firstname.toLowerCase().includes(searchText.toLowerCase()) ||
           p.lastname.toLowerCase().includes(searchText.toLowerCase()) ||
-          p.propertyname.toLowerCase().includes(searchText.toLowerCase()) ||
+          p.propertyName.toLowerCase().includes(searchText.toLowerCase()) ||
           p.email.toLowerCase().includes(searchText.toLowerCase()) ||
-          p.telephonenumber.toLowerCase().includes(searchText.toLowerCase())
+          p.telephoneNumber.toLowerCase().includes(searchText.toLowerCase())
       );
+
       return user;
     } else {
       return this.users;
@@ -57,13 +60,19 @@ export class UsersComponent implements OnInit {
         if (response && Array.isArray(response.data)) {
           this.users = response.data;
         } else {
-          console.error('Error occurred');
+          this.messageService.add({
+            severity: 'error',
+            summary: 'An error occurred!',
+            detail: 'An unexpected error occurred while retrieving user data',
+          });
         }
       },
-      error: (error) => console.log('Error'),
+      error: (error) =>
+        this.messageService.add({
+          severity: 'error',
+          summary: 'An error occurred!',
+          detail: error,
+        }),
     });
-    // Set users into the users signal
-    //   this.userDataService.users.set(userListFromJSON);
-    // });
   }
 }

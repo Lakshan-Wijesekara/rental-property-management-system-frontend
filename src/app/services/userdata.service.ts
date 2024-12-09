@@ -17,46 +17,13 @@ export class UserdataService {
     return this.http.get<DataResponse<User>>(this.apiUrl + '/api/users');
   }
 
-  addUser(user: User) {
-    try {
-      // we can send these data to external API later
-      // for now, we update the ng signal
-      this.http.post(this.apiUrl, user);
-      const successResponse = {
-        status: 'success',
-        message: 'User added',
-        data: user,
-      };
-      return successResponse;
-    } catch (error) {
-      const successResponse = {
-        status: 'error',
-        message: 'Error while adding user',
-        data: user,
-      };
-      return successResponse;
-    }
+  addUser(user: User): Observable<any> {
+    // Send the data to backend
+    return this.http.post(this.apiUrl + '/api/users', user);
   }
 
-  updateUser(updatedUser: User, id: string = '') {
-    try {
-      // let index = this.users().findIndex(
-      //   (element) => element.id == updatedUser.id
-      // );
-      this.http.put(this.apiUrl + '/' + id, updatedUser);
-      const response = {
-        status: 'success',
-        message: 'Property added',
-        data: updatedUser,
-      };
-      return response;
-    } catch (error) {
-      const errorResponse = {
-        status: 'unsuccessful',
-        message: 'Error occurred',
-        data: updatedUser,
-      };
-      return errorResponse;
-    }
+  updateUser(updatedUser: User, id: string = ''): Observable<any> {
+    //Send the updated property to backend
+    return this.http.put(this.apiUrl + '/api/users/' + id, updatedUser);
   }
 }

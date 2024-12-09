@@ -152,7 +152,6 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
         }
       },
       error: (error) => {
-        console.error('Full Error Object:', error); // Log the error object
         this.messageService.add({
           severity: 'error',
           summary: 'Error',

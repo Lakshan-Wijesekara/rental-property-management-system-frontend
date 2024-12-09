@@ -17,8 +17,8 @@
                     <label class="text-label"> Surname </label>
                 </p-floatLabel>
                 <p-floatLabel>
-                    <input class="property-name-box" pInputText id="propertyname" name="propertyname"  [(ngModel)]="propertyname" required>
-                        <div class="error-message" *ngIf="!userForm.submitted && !userForm.controls['propertyname']?.valid && userForm.controls['propertyname']?.touched">
+                    <input class="property-name-box" pInputText id="propertyName" name="propertyName"  [(ngModel)]="propertyName" required>
+                        <div class="error-message" *ngIf="!userForm.submitted && !userForm.controls['propertyName']?.valid && userForm.controls['propertyName']?.touched">
                             *Property Name is required.
                         </div>
                     <label class="text-label"> Property Name </label> 
@@ -31,12 +31,24 @@
                     <label class="text-label"> Email </label> 
                 </p-floatLabel>
                 <p-floatLabel>
-                    <input class="tp-number-box" pInputText id="telephonenumber" name="telephonenumber"  [(ngModel)]="telephonenumber" required #telephoneNumber="ngModel" tpValidator maxlength="10">
-                        <div class="error-message" *ngIf="!userForm.submitted && !userForm.controls['telephonenumber']?.valid && userForm.controls['telephonenumber']?.touched">
-                            *A 10-digit mobile number is required.
-                        </div>
-                    <label class="text-label"> Mobile Number </label> 
-                </p-floatLabel>
+                    <input
+                      class="tp-number-box"
+                      pInputText
+                      id="telephoneNumber"
+                      name="telephoneNumber"
+                      [(ngModel)]="telephoneNumber"
+                      required
+                      pattern="[0-9]{10}"
+                      maxlength="10"
+                    />
+                    <div
+                      class="error-message"
+                      *ngIf="!userForm.submitted && !userForm.controls['telephoneNumber']?.valid && userForm.controls['telephoneNumber']?.touched"
+                    >
+                      *A valid 10-digit mobile number is required.
+                    </div>
+                    <label class="text-label">Mobile Number</label>
+                  </p-floatLabel>
                 <div class="button-container">
                     <p-button class="add-btn" (onClick)="closeDialog()" [disabled]="!userForm.valid" type="submit" [raised]="true" [rounded]="true" [label]="currentPropertyProcess==_propertyVisibility.AddProperty? 'Add User': 'Update User'" severity="warning"/>
                 </div>  
