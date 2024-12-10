@@ -1,5 +1,5 @@
 export interface Property {
-  _id?: string;
+  _id: string;
   selectedCity: string;
   propertyName: string;
   propertyArea: string;

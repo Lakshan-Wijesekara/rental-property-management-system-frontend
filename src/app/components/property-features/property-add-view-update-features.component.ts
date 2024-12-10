@@ -132,6 +132,7 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
   addProperty(propertyform: FormGroupDirective): void {
     this.propertyShowState = this.propertyVisibility.AddProperty;
     const newProperty: Property = {
+      _id: '',
       selectedCity: this.dropdownSelectedCity!,
       propertyName: propertyform.value.propertyName,
       propertyArea: propertyform.value.propertyArea,
@@ -196,6 +197,7 @@ export class PropertyAddViewUpdateFeaturesComponent implements OnInit {
   //To update the property with a new value
   updateProperty(propertyform: FormGroupDirective): void {
     const updatedProperty = {
+      _id: '',
       selectedCity: this.dropdownSelectedCity!,
       propertyName: propertyform.value.propertyName,
       propertyArea: propertyform.value.propertyArea,

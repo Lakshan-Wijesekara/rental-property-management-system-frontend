@@ -21,7 +21,6 @@ export class UserAddViewUpdateFeaturesComponent {
   propertyName: string = '';
   email: string = '';
   telephoneNumber: number = 0;
-  id: number = 0;
   selectedUser!: User;
   currentPropertyProcess: propertyVisibility = propertyVisibility.AddProperty;
 
@@ -79,7 +78,6 @@ export class UserAddViewUpdateFeaturesComponent {
   }
 
   clearUserForm(): void {
-    this.id = 0;
     this.firstname = '';
     this.lastname = '';
     this.propertyName = '';
@@ -125,6 +123,7 @@ export class UserAddViewUpdateFeaturesComponent {
   //PRIVATE
   private createUserObject(): User {
     return {
+      _id: '',
       firstname: this.firstname,
       lastname: this.lastname,
       propertyName: this.propertyName,
