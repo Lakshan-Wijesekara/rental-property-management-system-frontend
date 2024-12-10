@@ -16,11 +16,11 @@ enum propertyVisibility {
 export class UserAddViewUpdateFeaturesComponent {
   _propertyVisibility = propertyVisibility;
   isAddUserFormvisible: boolean = false;
-  firstname?: string;
-  lastname?: string;
-  propertyName?: string;
-  email?: string;
-  telephoneNumber?: number;
+  firstname: string = '';
+  lastname: string = '';
+  propertyName: string = '';
+  email: string = '';
+  telephoneNumber: number = 0;
   id: number = 0;
   selectedUser!: User;
   currentPropertyProcess: propertyVisibility = propertyVisibility.AddProperty;
