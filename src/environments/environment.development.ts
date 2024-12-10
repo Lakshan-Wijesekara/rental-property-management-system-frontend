@@ -6,11 +6,3 @@ export const environment = {
 export const BackendLocalhost = {
   URL: 'http://127.0.0.1:5000',
 };
-
-export const propertiesURL = {
-  URL: '/api/properties',
-};
-
-export const usersURL = {
-  URL: '/api/users',
-};
