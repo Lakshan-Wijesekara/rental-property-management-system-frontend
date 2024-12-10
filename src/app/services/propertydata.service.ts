@@ -3,6 +3,7 @@ import { Property } from '../interfaces/property';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DataResponse } from '../interfaces/data-response';
+import { APISubURL } from '../configurations/constants';
 import { BackendLocalhost } from '../../environments/environment';
 
 @Injectable({
@@ -15,22 +16,22 @@ export class PropertydataService {
 
   fetchData(): Observable<DataResponse<Property>> {
     return this.http.get<DataResponse<Property>>(
-      this.apiUrl + '/api/properties'
+      this.apiUrl + APISubURL.propertiesURL
     );
   }
 
   addProperty(property: Property): Observable<any> {
-    return this.http.post(this.apiUrl + '/api/properties', property);
+    return this.http.post(this.apiUrl + APISubURL.propertiesURL, property);
   }
 
   updateProperty(updatedProperty: Property, id: String = ''): Observable<any> {
     return this.http.put(
-      this.apiUrl + '/api/properties/' + id,
+      this.apiUrl + APISubURL.propertiesURL + '/' + id,
       updatedProperty
     );
   }
 
   deactivateProperty(id: string): Observable<any> {
-    return this.http.delete(this.apiUrl + '/api/properties/' + id);
+    return this.http.delete(this.apiUrl + APISubURL.propertiesURL + '/' + id);
   }
 }

@@ -42,7 +42,11 @@ export class LoginComponent implements OnInit {
           detail: 'A system error occured',
           key: 'tr',
         });
-        console.error('User not found', error);
+        this.messageService.add({
+          severity: 'warn',
+          summary: 'System error',
+          detail: 'Unexpected error occured while retrieving data',
+        });
       }
     );
   }

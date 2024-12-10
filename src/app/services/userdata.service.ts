@@ -3,59 +3,31 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../interfaces/user';
 import { DataResponse } from '../interfaces/data-response';
+import { APISubURL } from '../configurations/constants';
+import { BackendLocalhost } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserdataService {
-  // since we don't use an API, we use a ng signal to manage state
-  public users = signal<User[]>([]);
+  private apiUrl = BackendLocalhost.URL;
 
   constructor(private http: HttpClient) {}
 
-  fetchData(): Observable<User[]> {
-    return this.http.get<User[]>('assets/users.json');
+  fetchData(): Observable<DataResponse<User>> {
+    return this.http.get<DataResponse<User>>(this.apiUrl + APISubURL.usersURL);
   }
 
-  addUser(user: User) {
-    try {
-      // we can send these data to external API later
-      this.users().push(user);
-      const successResponse = {
-        status: 'success',
-        message: 'User added',
-        data: user,
-      };
-      return successResponse;
-    } catch (error) {
-      const successResponse = {
-        status: 'error',
-        message: 'Error while adding user',
-        data: user,
-      };
-      return successResponse;
-    }
+  addUser(user: User): Observable<any> {
+    // Send the data to backend
+    return this.http.post(this.apiUrl + APISubURL.usersURL, user);
   }
 
-  updateUser(updatedUser: User) {
-    try {
-      let index = this.users().findIndex(
-        (element) => element.id == updatedUser.id
-      );
-      this.users().splice(index, 1, updatedUser);
-      const response = {
-        status: 'success',
-        message: 'Property added',
-        data: updatedUser,
-      };
-      return response;
-    } catch (error) {
-      const errorResponse = {
-        status: 'unsuccessful',
-        message: 'Error occurred',
-        data: updatedUser,
-      };
-      return errorResponse;
-    }
+  updateUser(updatedUser: User, id: string = ''): Observable<any> {
+    //Send the updated property to backend
+    return this.http.put(
+      this.apiUrl + APISubURL.usersURL + '/' + id,
+      updatedUser
+    );
   }
 }

@@ -18,10 +18,9 @@ export class UserAddViewUpdateFeaturesComponent {
   isAddUserFormvisible: boolean = false;
   firstname: string = '';
   lastname: string = '';
-  propertyname: string = '';
+  propertyName: string = '';
   email: string = '';
-  telephonenumber: string = '';
-  id: number = 0;
+  telephoneNumber: number = 0;
   selectedUser!: User;
   currentPropertyProcess: propertyVisibility = propertyVisibility.AddProperty;
 
@@ -31,31 +30,26 @@ export class UserAddViewUpdateFeaturesComponent {
   ) {}
 
   addUser(): void {
-    const newUser = {
-      id: this.userDataService.users().length + 1,
-      firstname: this.firstname,
-      lastname: this.lastname,
-      propertyname: this.propertyname,
-      email: this.email,
-      telephonenumber: this.telephonenumber,
-    };
-    const response = this.userDataService.addUser(newUser);
-    if (response.status === 'success') {
-      //add toast messages for user
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'User added successfully',
-      });
-      // close dialog when a user is successfully added
-      this.closeDialog();
-    } else {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Error occurred',
-      });
-    }
+    const newUser = this.createUserObject();
+    this.userDataService.addUser(newUser).subscribe({
+      next: (response) => {
+        if (response.status == true) {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'User added successfully!',
+            detail: response.message,
+          });
+          this.closeDialog();
+        }
+      },
+      error: (error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'An error occurred!',
+          detail: error.error.message,
+        });
+      },
+    });
   }
 
   showDialog(): void {
@@ -76,48 +70,45 @@ export class UserAddViewUpdateFeaturesComponent {
   }
 
   fillUserForm(): void {
-    this.id = this.selectedUser.id || 0;
     this.firstname = this.selectedUser.firstname;
     this.lastname = this.selectedUser.lastname;
-    this.propertyname = this.selectedUser.propertyname;
+    this.propertyName = this.selectedUser.propertyName;
     this.email = this.selectedUser.email;
-    this.telephonenumber = this.selectedUser.telephonenumber;
+    this.telephoneNumber = this.selectedUser.telephoneNumber;
   }
 
   clearUserForm(): void {
-    this.id = 0;
     this.firstname = '';
     this.lastname = '';
-    this.propertyname = '';
+    this.propertyName = '';
     this.email = '';
-    this.telephonenumber = '';
+    this.telephoneNumber = 0;
   }
 
   //This method updates the user according to the user inputs from html
   updateUserForm(): void {
-    const updatedUser = {
-      id: this.id,
-      firstname: this.firstname,
-      lastname: this.lastname,
-      propertyname: this.propertyname,
-      email: this.email,
-      telephonenumber: this.telephonenumber,
-    };
-    const response = this.userDataService.updateUser(updatedUser);
-    if (response.status === 'success') {
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Property added successfully',
+    const updatedUser = this.createUserObject();
+    this.userDataService
+      .updateUser(updatedUser, this.selectedUser._id)
+      .subscribe({
+        next: (response) => {
+          if (response.status == true) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'User updated successfully!',
+              detail: response.message,
+            });
+            this.closeDialog();
+          }
+        },
+        error: (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: error.error.message,
+          });
+        },
       });
-      this.closeDialog();
-    } else {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Error occurred',
-      });
-    }
   }
 
   //On submit, the method checks if the currentPropertyProcess is similar to add property or update property
@@ -127,5 +118,17 @@ export class UserAddViewUpdateFeaturesComponent {
     } else {
       this.updateUserForm();
     }
+  }
+
+  //PRIVATE
+  private createUserObject(): User {
+    return {
+      _id: '',
+      firstname: this.firstname,
+      lastname: this.lastname,
+      propertyName: this.propertyName,
+      email: this.email,
+      telephoneNumber: this.telephoneNumber,
+    };
   }
 }
