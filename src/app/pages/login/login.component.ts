@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../../services/admindata.service';
+import { UserdataService } from '../../services/userdata.service';
 import { Router } from '@angular/router';
-import { Admin } from '../../interfaces/admin';
 import { MessageService } from 'primeng/api';
 import { EncryptionService } from '../../services/encryption.service';
 import { AuthenticationService } from '../../services/authentication.service';
+import { User } from '../../interfaces/user';
 
 @Component({
   selector: 'app-login',
@@ -12,13 +12,13 @@ import { AuthenticationService } from '../../services/authentication.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  userName: string = ''; //entered username by user
+  username: string = ''; //entered username by user
   password: string = ''; //entered password by user
-  users: Admin[] = [];
+  users: User[] = [];
   loading: boolean = false;
 
   constructor(
-    private dataService: DataService,
+    private dataService: UserdataService,
     private router: Router,
     private messageService: MessageService,
     private encryptionService: EncryptionService,
@@ -27,36 +27,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  traceData(): void {
-    this.loading = true;
-    this.dataService.fetchData().subscribe(
-      (users) => {
-        this.users = users;
-        this.traceUser();
-      },
-      (error) => {
-        this.loading = false;
-        this.messageService.add({
-          severity: 'warn',
-          summary: 'User not found!',
-          detail: 'A system error occured',
-          key: 'tr',
-        });
-        this.messageService.add({
-          severity: 'warn',
-          summary: 'System error',
-          detail: 'Unexpected error occured while retrieving data',
-        });
-      }
-    );
-  }
-
-  //PRIVATE
-
-  private traceUser(): void {
+  async traceUser(): Promise<void> {
     //Find the person from username
     this.loading = false;
-    if (this.userName === '') {
+    if (this.username === '') {
       this.messageService.add({
         severity: 'error',
         summary: 'Please Enter a Username!',
@@ -74,24 +48,16 @@ export class LoginComponent implements OnInit {
       });
       return;
     }
-    const person = this.users.find(
-      (user: Admin) => user.username === this.userName
-    );
-    //Compare the passwords
-    if (
-      this.encryptionService.comparePassword(this.password, person?.password)
-    ) {
-      const returnedToken =
-        person && this.authenticationService.generateToken(person); //Pass the user as an input for generateToken method
 
+    const generatedToken = this.authenticationService.getToken(
+      this.username,
+      this.password
+    );
+
+    if (await generatedToken) {
       this.router.navigate(['/home']);
     } else {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Login Failed!',
-        detail: 'Please input correct credentials',
-        key: 'tr',
-      });
+      this.router.navigate(['/login']);
     }
   }
 }

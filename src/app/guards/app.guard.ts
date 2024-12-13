@@ -9,6 +9,7 @@ export const appGuard: CanActivateFn = (route, state) => {
   if (authenticationService.isLoggedIn()) {
     return true;
   } else {
+    authenticationService.clearToken();
     router.navigate(['/login']);
     return false;
   }

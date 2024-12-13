@@ -3,7 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './Interceptors/auth.interceptor.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -45,7 +46,11 @@ import { UserAddViewUpdateFeaturesComponent } from './components/user-features/u
     TextFieldModule,
     GoogleMapsModule,
   ],
-  providers: [provideHttpClient(), ConfirmationService, MessageService],
+  providers: [
+    provideHttpClient(withInterceptors([authInterceptor])),
+    ConfirmationService,
+    MessageService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

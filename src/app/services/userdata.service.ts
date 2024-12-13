@@ -18,6 +18,10 @@ export class UserdataService {
     return this.http.get<DataResponse<User>>(this.apiUrl + APISubURL.usersURL);
   }
 
+  logUser(user_credentials: any): Observable<any> {
+    return this.http.post(this.apiUrl + APISubURL.loginURL, user_credentials);
+  }
+
   addUser(user: User): Observable<any> {
     // Send the data to backend
     return this.http.post(this.apiUrl + APISubURL.usersURL, user);
