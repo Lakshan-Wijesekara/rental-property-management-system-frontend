@@ -26,6 +26,7 @@ export const routes: Routes = [
   {
     path: 'properties',
     component: PropertiesComponent,
+    canActivate: [appGuard],
     data: {
       title: 'Properties',
       icon: 'pi-building',
@@ -34,6 +35,7 @@ export const routes: Routes = [
   {
     path: 'users',
     component: UsersComponent,
+    canActivate: [appGuard],
     data: {
       title: 'Users',
       icon: 'pi-users',

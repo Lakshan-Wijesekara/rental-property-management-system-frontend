@@ -3,7 +3,7 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserdataService } from './userdata.service';
 import { MessageService } from 'primeng/api';
-
+import { jwtDecode } from 'jwt-decode';
 @Injectable({
   providedIn: 'root',
 })
@@ -44,13 +44,21 @@ export class AuthenticationService {
     });
   }
 
+  decodeToken(token: string): any {
+    return jwtDecode(token);
+  }
+
   isLoggedIn(): boolean {
     const sessionToken = localStorage.getItem('Session_Token');
     if (sessionToken) {
-      return true;
-    } else {
-      return false;
+      const decodedToken = this.decodeToken(sessionToken);
+      const currentTime = Math.floor(Date.now() / 1000);
+
+      if (currentTime < decodedToken.exp) {
+        return true;
+      }
     }
+    return false;
   }
 
   clearToken(): void {

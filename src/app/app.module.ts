@@ -3,8 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { authInterceptor } from './Interceptors/auth.interceptor.interceptor';
+import {
+  provideHttpClient,
+  withInterceptors,
+  HttpClientModule,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
+import { AuthInterceptor } from './Interceptors/auth.interceptor.interceptor';
+import { ErrorHandlingInterceptor } from './Interceptors/error-handling.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -45,9 +51,15 @@ import { UserAddViewUpdateFeaturesComponent } from './components/user-features/u
     ReactiveFormsModule,
     TextFieldModule,
     GoogleMapsModule,
+    HttpClientModule,
   ],
   providers: [
-    provideHttpClient(withInterceptors([authInterceptor])),
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorHandlingInterceptor,
+      multi: true,
+    },
     ConfirmationService,
     MessageService,
   ],
