@@ -9,14 +9,10 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
-import { MessageService } from 'primeng/api';
 
 @Injectable()
 export class ErrorHandlingInterceptor implements HttpInterceptor {
-  constructor(
-    private authService: AuthenticationService,
-    private messageService: MessageService
-  ) {}
+  constructor(private authService: AuthenticationService) {}
 
   intercept(
     req: HttpRequest<any>,
@@ -25,7 +21,6 @@ export class ErrorHandlingInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status == 401) {
-          console.error('Token expired');
           this.authService.clearToken();
         }
 

@@ -50,19 +50,22 @@ export class AuthenticationService {
 
   isLoggedIn(): boolean {
     const sessionToken = localStorage.getItem('Session_Token');
-    if (sessionToken) {
-      const decodedToken = this.decodeToken(sessionToken);
-      const currentTime = Math.floor(Date.now() / 1000);
+    const refreshToken = localStorage.getItem('NewAuthToken');
+    if (sessionToken || refreshToken) {
+      return true;
+      // const decodedToken = this.decodeToken(sessionToken);
+      // const currentTime = Math.floor(Date.now() / 1000);
 
-      if (currentTime < decodedToken.exp) {
-        return true;
-      }
+      // if (currentTime < decodedToken.exp) {
+      //   return true;
+      // }
     }
     return false;
   }
 
   clearToken(): void {
     localStorage.removeItem('Session_Token');
+    localStorage.removeItem('NewAuthToken');
     this.router.navigate(['/login']);
   }
 }
