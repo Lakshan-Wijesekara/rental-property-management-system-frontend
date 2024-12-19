@@ -53,12 +53,6 @@ export class AuthenticationService {
     const refreshToken = localStorage.getItem('NewAuthToken');
     if (sessionToken || refreshToken) {
       return true;
-      // const decodedToken = this.decodeToken(sessionToken);
-      // const currentTime = Math.floor(Date.now() / 1000);
-
-      // if (currentTime < decodedToken.exp) {
-      //   return true;
-      // }
     }
     return false;
   }
